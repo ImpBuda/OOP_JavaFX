@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="561.0" prefWidth="877.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.StudentController">
+   <children>
+      <TableView fx:id="table" layoutX="14.0" layoutY="160.0" prefHeight="387.0" prefWidth="343.0">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="75.0" text="Номер" />
+          <TableColumn fx:id="firstName" prefWidth="75.0" text="Имя" />
+            <TableColumn fx:id="lastName" prefWidth="75.0" text="Фамилия" />
+            <TableColumn fx:id="idInstruction" prefWidth="116.0" text="Номер поручения" />
+        </columns>
+      </TableView>
+      <Label layoutX="357.0" layoutY="14.0" prefHeight="58.0" prefWidth="178.0" text="Студенты">
+         <font>
+            <Font size="40.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="0.45023696682464454" endY="0.966824644549763" startX="0.44549763033175355" startY="0.4976303317535545">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.6052631735801697" green="0.566173255443573" blue="0.34466373920440674" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.006711409395973154">
+                     <color>
+                        <Color red="0.6052631735801697" green="0.566173255443573" blue="0.34466373920440674" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Button fx:id="btnDelete" layoutX="376.0" layoutY="149.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Удалить студента" textFill="#689dff" />
+      <Button fx:id="btnUpdate" layoutX="376.0" layoutY="203.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Редактировать студента" textFill="#689dff" />
+      <Button fx:id="btnAdd" layoutX="376.0" layoutY="258.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Добавить студента" textFill="#689dff" />
+      <AnchorPane fx:id="addPanel" layoutX="376.0" layoutY="308.0" prefHeight="239.0" prefWidth="178.0" style="-fx-background-color: white; visibility: hidden;">
+         <children>
+            <TextField fx:id="idInput" layoutX="13.0" layoutY="14.0" promptText="Номер" />
+            <TextField fx:id="nameInput" layoutX="13.0" layoutY="49.0" promptText="Имя" />
+            <TextField fx:id="surnameInput" layoutX="13.0" layoutY="84.0" promptText="Фамилия" />
+            <TextField fx:id="instructionInput" layoutX="13.0" layoutY="119.0" promptText="Номер поручения" />
+            <Button fx:id="submit" layoutX="13.0" layoutY="158.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Принять" />
+            <Button fx:id="cancel" layoutX="13.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Отмена" />
+         </children>
+      </AnchorPane>
+      <TextField fx:id="findInput" layoutX="43.0" layoutY="18.0" prefHeight="25.0" prefWidth="268.0" promptText="Введите, что хотите найти" />
+      <MenuBar layoutX="43.0" layoutY="60.0" prefHeight="25.0" prefWidth="178.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Выбрать параметр поиска">
+            <items>
+                  <RadioMenuItem fx:id="nameRadio" mnemonicParsing="false" selected="true" text="Имя">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="find" />
+                     </toggleGroup>
+                  </RadioMenuItem>
+                  <RadioMenuItem fx:id="instructionRadio" mnemonicParsing="false" text="Номер" toggleGroup="$find" />
+                  <RadioMenuItem fx:id="surnameRadio" mnemonicParsing="false" text="Фамилия" toggleGroup="$find" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Button fx:id="btnOpen" layoutX="758.0" layoutY="505.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="открыть" />
+   </children>
+</AnchorPane>
