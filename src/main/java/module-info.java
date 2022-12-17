@@ -1,8 +1,8 @@
 module com.example.oop_application {
     requires javafx.controls;
     requires javafx.fxml;
-    requires com.google.gson;
     requires lombok;
+    requires com.google.gson;
 
     opens com.example.oop_application to javafx.fxml;
     opens com.example.oop_application.Controller to javafx.fxml;

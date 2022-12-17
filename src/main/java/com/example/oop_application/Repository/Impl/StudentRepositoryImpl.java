@@ -15,7 +15,6 @@ import java.util.List;
 
 public class StudentRepositoryImpl implements StudentRepository {
 
-    private final String filepath = StudentController.filepath;
 
     @Override
     public List<Student> surnameSearch(String str) {
@@ -54,7 +53,7 @@ public class StudentRepositoryImpl implements StudentRepository {
             students.set(students.indexOf(getStudentById(id)), copy);
 
             Gson gson = new Gson();
-            PrintWriter out = new PrintWriter(new FileWriter(filepath));
+            PrintWriter out = new PrintWriter(new FileWriter(StudentController.filepath));
             out.write(gson.toJson(students));
             out.close();
         } catch (Exception e) {
@@ -77,18 +76,19 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public List<Student> getAllStudent()  {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(filepath));
+            System.out.println(StudentController.filepath);
+            BufferedReader reader = new BufferedReader(new FileReader("student.json"));
             Gson gson = new Gson();
 
             Type studentListType = new TypeToken<List<Student>>(){}.getType();
-            List<Student> userList = gson.fromJson(reader, studentListType);
-
-            return userList;
+            List<Student> studentList = gson.fromJson(reader, studentListType);
+            System.out.println(studentList);
+            return studentList;
         }
-        catch (Exception e){
-            System.out.println("Error: " + e);
-        }
-        return null;
+       catch (Exception e){
+           System.out.println("Error: " + e);
+       }
+      return null;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class StudentRepositoryImpl implements StudentRepository {
                 if(students.get(i).getId() == id)
                     students.remove(i);
 
-            PrintWriter out = new PrintWriter(new FileWriter(filepath));
+            PrintWriter out = new PrintWriter(new FileWriter(StudentController.filepath));
             out.write(gson.toJson(students));
             out.close();
         } catch (Exception e) {
@@ -115,7 +115,7 @@ public class StudentRepositoryImpl implements StudentRepository {
             Gson gson = new Gson();
             List<Student> students = new ArrayList<>(getAllStudent());
             students.add(student);
-            PrintWriter out = new PrintWriter(new FileWriter(filepath));
+            PrintWriter out = new PrintWriter(new FileWriter(StudentController.filepath));
             out.write(gson.toJson(students));
             out.close();
         } catch (Exception e) {
@@ -126,7 +126,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public Student getStudentById(int id) {
         Gson gson = new Gson();
-        try (FileReader reader = new FileReader(filepath)) {
+        try (FileReader reader = new FileReader(StudentController.filepath)) {
             List<Student> students = gson.fromJson(reader, new TypeToken<List<Student>>() {}.getType());
             for (Student student : students) {
                 if (student.getId() == id) {
