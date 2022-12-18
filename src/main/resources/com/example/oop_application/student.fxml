@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="561.0" prefWidth="877.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.StudentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="911.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.StudentController">
    <children>
       <TableView fx:id="table" layoutX="14.0" layoutY="160.0" prefHeight="387.0" prefWidth="343.0">
         <columns>
@@ -74,12 +74,13 @@
                         <ToggleGroup fx:id="find" />
                      </toggleGroup>
                   </RadioMenuItem>
-                  <RadioMenuItem fx:id="instructionRadio" mnemonicParsing="false" text="Номер" toggleGroup="$find" />
+                  <RadioMenuItem fx:id="instructionRadio" mnemonicParsing="false" text="Номер поручения" toggleGroup="$find" />
                   <RadioMenuItem fx:id="surnameRadio" mnemonicParsing="false" text="Фамилия" toggleGroup="$find" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <Button fx:id="btnOpen" layoutX="758.0" layoutY="505.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="открыть" />
+      <Button fx:id="btnOpen" layoutX="758.0" layoutY="505.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="открыть" />
+      <Button fx:id="btnSave" layoutX="758.0" layoutY="458.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Сохранить как" />
    </children>
 </AnchorPane>

@@ -2,6 +2,7 @@ package com.example.oop_application.Repository;
 
 import com.example.oop_application.Model.Student;
 
+import java.io.File;
 import java.util.List;
 
 public interface StudentRepository {
@@ -21,5 +22,7 @@ public interface StudentRepository {
     void saveStudent(Student student);
 
     Student getStudentById(int id);
+
+    void saveFileSystem(File saveFile);
 
 }

@@ -2,6 +2,7 @@ package com.example.oop_application.Service;
 
 import com.example.oop_application.Model.Student;
 
+import java.io.File;
 import java.util.List;
 
 public interface StudentService {
@@ -21,4 +22,6 @@ public interface StudentService {
  void updateStudentById(int id, Student student);
 
  void deleteStudentById(int id);
+
+ void saveFileSystem(File saveFile);
 }

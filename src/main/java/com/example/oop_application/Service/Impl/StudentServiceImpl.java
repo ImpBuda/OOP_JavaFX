@@ -5,6 +5,7 @@ import com.example.oop_application.Repository.Impl.StudentRepositoryImpl;
 import com.example.oop_application.Repository.StudentRepository;
 import com.example.oop_application.Service.StudentService;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -15,6 +16,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getStudentById(int id) {
        return studentRepository.getStudentById(id);
+    }
+
+    @Override
+    public void saveFileSystem(File saveFile) {
+        studentRepository.saveFileSystem(saveFile);
     }
 
     @Override

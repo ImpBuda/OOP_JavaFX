@@ -6,23 +6,34 @@ import com.example.oop_application.Service.StudentService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Data;
 
+import java.io.Console;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @Data
 public class StudentController {
 
+
     private final StudentService studentService = new StudentServiceImpl();
 
     static public String filepath;
+
+    @FXML
+    public Button btnSave;
 
     @FXML
     private ToggleGroup find;
@@ -87,14 +98,21 @@ public class StudentController {
     @FXML
     private TableColumn<Student, String> lastName;
 
-    public StudentController() {
-    }
-
     @FXML
     void initialize(){
 
+        btnSave.setOnAction(actionEvent -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
+            File file = fileChooser.showSaveDialog(btnSave.getScene().getWindow());
+            if(file != null) {
+                studentService.saveFileSystem(file);
+            }
+        });
+
         btnOpen.setOnAction(actionEvent -> {
             FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
             File file = fileChooser.showOpenDialog(btnOpen.getScene().getWindow());
             if (file != null) {
                 filepath = file.getPath();
@@ -102,74 +120,107 @@ public class StudentController {
             }
         });
 
-
-
             btnDelete.setOnAction(actionEvent -> {
-                if(!table.getItems().isEmpty()) {
+                if(!table.getSelectionModel().isEmpty()) {
                     delete();
                     updateTable(studentService.getAllStudents());
+                }
+                else {
+                    modalWindow("Выберите строку, которую нужно удалить");
                 }
             });
 
             cancel.setOnAction(action -> {
-                if(!table.getItems().isEmpty()) {
                     clearInput();
                     addPanel.setStyle("visibility: hidden;");
-                }
             });
 
             btnAdd.setOnAction(actionEvent -> {
-                if(!table.getItems().isEmpty()) {
                     addPanel.setStyle("visibility: visible;");
 
                     submit.setOnAction(action -> {
+                        if(studentService.getStudentById(Integer.parseInt(idInput.getText())) != null){
+                            modalWindow("Студент с таким номером уже существует");
+                        }
                         add();
                         updateTable(studentService.getAllStudents());
                     });
-                }
             });
 
 
             btnUpdate.setOnAction(actionEvent -> {
-                if(!table.getItems().isEmpty()) {
-                    addPanel.setStyle("visibility: visible;");
-                    fillingInput();
+                if(!table.getSelectionModel().isEmpty()) {
+                        addPanel.setStyle("visibility: visible;");
+                        fillingInput();
 
-                    submit.setOnAction(action -> {
-                        update();
-                        updateTable(studentService.getAllStudents());
-                        addPanel.setStyle("visibility: hidden;");
-                        clearInput();
-                    });
+                        submit.setOnAction(action -> {
+                            update();
+                            updateTable(studentService.getAllStudents());
+                            addPanel.setStyle("visibility: hidden;");
+                            clearInput();
+                        });
+                }
+                else {
+                    modalWindow("Выберите строку, которую нужно обновить");
                 }
             });
 
-            findInput.textProperty().addListener((observable, oldValue, newValue) -> {
-                if(!table.getItems().isEmpty()) {
-                    if (nameRadio.isSelected()) updateTable(studentService.nameSearch(newValue));
-                    else if (surnameRadio.isSelected()) updateTable(studentService.surnameSearch(newValue));
-                    else if (instructionRadio.isSelected()) updateTable(studentService.instructionSearch(newValue));
-                }
-            });
+
+        findInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (nameRadio.isSelected()) updateTable(studentService.nameSearch(newValue));
+            else if (surnameRadio.isSelected()) updateTable(studentService.surnameSearch(newValue));
+            else if (instructionRadio.isSelected()) updateTable(studentService.instructionSearch(newValue));
+        });
     }
 
     private void update(){
-        Student student = new Student();
-        int id = table.getSelectionModel().getSelectedItem().getId();
-        student.setId(Integer.valueOf(idInput.getText()));
-        student.setFirstName(nameInput.getText());
-        student.setLastName(surnameInput.getText());
-        student.setIdInstruction(Integer.valueOf(instructionInput.getText()));
-        studentService.updateStudentById(id, student);
+        try {
+            Student student = new Student();
+            int id = table.getSelectionModel().getSelectedItem().getId();
+            student.setId(Integer.valueOf(idInput.getText()));
+            student.setFirstName(nameInput.getText());
+            student.setLastName(surnameInput.getText());
+            student.setIdInstruction(Integer.valueOf(instructionInput.getText()));
+            studentService.updateStudentById(id, student);
+        }
+        catch (Exception e){
+            modalWindow("Неправильно введены данные");
+        }
     }
 
-    private void add(){
-        Student student = new Student();
-        student.setId(Integer.valueOf(idInput.getText()));
-        student.setFirstName(nameInput.getText());
-        student.setLastName(surnameInput.getText());
-        student.setIdInstruction(Integer.valueOf(instructionInput.getText()));
-        studentService.createStudent(student);
+    private void add() {
+
+        try {
+            Student student = new Student();
+            student.setId(Integer.valueOf(idInput.getText()));
+            student.setFirstName(nameInput.getText());
+            student.setLastName(surnameInput.getText());
+            student.setIdInstruction(Integer.valueOf(instructionInput.getText()));
+            studentService.createStudent(student);
+        }
+        catch (Exception e) {
+            modalWindow("Неправильно введены данные");
+        }
+
+    }
+
+    public void modalWindow(String str) {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop_application/exception.fxml"));
+        try {
+            loader.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Parent root = loader.getRoot();
+        ExceptionController controller = loader.getController();
+        controller.getMessage().setText(str);
+
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
     }
 
 
