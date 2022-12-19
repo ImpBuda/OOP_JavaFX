@@ -36,5 +36,36 @@ public class HomeController {
             stage.setScene(new Scene(root));
             stage.showAndWait();
         });
+
+        headView.setOnAction(actionEvent -> {
+            headView.getScene().getWindow().hide();
+
+            FXMLLoader loader = new FXMLLoader(StudentController.class.getResource("/com/example/oop_application/head.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Parent root = loader.getRoot();
+            Stage stage1 = new Stage();
+            stage1.setScene(new Scene(root));
+            stage1.showAndWait();
+        });
+
+        instructionView.setOnAction(actionEvent -> {
+            headView.getScene().getWindow().hide();
+
+            FXMLLoader loader = new FXMLLoader(StudentController.class.getResource("/com/example/oop_application/instruction.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Parent root = loader.getRoot();
+            Stage stage1 = new Stage();
+            stage1.setScene(new Scene(root));
+            stage1.showAndWait();
+        });
+
     }
 }

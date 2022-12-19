@@ -1,4 +1,4 @@
-package com.example.oop_application.Repository;
+package com.example.oop_application.Service;
 
 import com.example.oop_application.Model.Head;
 import com.example.oop_application.Model.Instruction;
@@ -6,7 +6,7 @@ import com.example.oop_application.Model.Instruction;
 import java.io.File;
 import java.util.List;
 
-public interface InstructionRepository {
+public interface InstructionService {
 
     List<Instruction> contentSearch(String str);
 
@@ -23,4 +23,5 @@ public interface InstructionRepository {
     Instruction getInstructionById(int id);
 
     void saveFileSystem(File saveFile);
+
 }

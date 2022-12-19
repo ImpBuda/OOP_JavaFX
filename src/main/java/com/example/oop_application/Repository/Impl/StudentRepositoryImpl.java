@@ -63,10 +63,11 @@ public class StudentRepositoryImpl implements StudentRepository {
     public void saveFileSystem(File saveFile) {
         Gson gson = new Gson();
         List<Student> students = new ArrayList<>(getAllStudent());
-        try {
-            PrintWriter out = new PrintWriter(new FileWriter(saveFile.getPath()));
+
+        try {  PrintWriter out = new PrintWriter(new FileWriter(saveFile.getPath()));
             out.write(gson.toJson(students));
             out.close();
+
         }catch (Exception e) {
             System.out.println("Error: " + e);
     }

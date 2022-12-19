@@ -1,14 +1,17 @@
 package com.example.oop_application.Model;
 
+import lombok.Data;
+
 import java.time.LocalDate;
 
+@Data
 public class Instruction {
 
-    private Long id;
+    private Integer id;
 
     private String content;
 
     private LocalDate dateOfIndication;
 
-    private Long DaysToComplete;
+    private Integer DaysToComplete;
 }

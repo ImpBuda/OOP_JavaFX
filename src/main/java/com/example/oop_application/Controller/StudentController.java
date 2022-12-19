@@ -74,6 +74,8 @@ public class StudentController {
     @FXML
     private Button btnAdd;
 
+    @FXML Button back;
+
     @FXML
     private Button btnDelete;
 
@@ -100,6 +102,8 @@ public class StudentController {
 
     @FXML
     void initialize(){
+
+        back.setOnAction(actionEvent -> backToMenu());
 
         btnSave.setOnAction(actionEvent -> {
             FileChooser fileChooser = new FileChooser();
@@ -138,13 +142,7 @@ public class StudentController {
             btnAdd.setOnAction(actionEvent -> {
                     addPanel.setStyle("visibility: visible;");
 
-                    submit.setOnAction(action -> {
-                        if(studentService.getStudentById(Integer.parseInt(idInput.getText())) != null){
-                            modalWindow("Студент с таким номером уже существует");
-                        }
-                        add();
-                        updateTable(studentService.getAllStudents());
-                    });
+                    submit.setOnAction(action -> add());
             });
 
 
@@ -191,12 +189,16 @@ public class StudentController {
     private void add() {
 
         try {
+            if(studentService.getStudentById(Integer.parseInt(idInput.getText())) != null){
+                modalWindow("Студент с таким номером уже существует");
+            }
             Student student = new Student();
             student.setId(Integer.valueOf(idInput.getText()));
             student.setFirstName(nameInput.getText());
             student.setLastName(surnameInput.getText());
             student.setIdInstruction(Integer.valueOf(instructionInput.getText()));
             studentService.createStudent(student);
+            updateTable(studentService.getAllStudents());
         }
         catch (Exception e) {
             modalWindow("Неправильно введены данные");
@@ -252,5 +254,21 @@ public class StudentController {
         nameInput.setText(table.getSelectionModel().getSelectedItem().getFirstName());
         surnameInput.setText(table.getSelectionModel().getSelectedItem().getLastName());
         instructionInput.setText(table.getSelectionModel().getSelectedItem().getIdInstruction().toString());
+    }
+
+    private void backToMenu(){
+        back.getScene().getWindow().hide();
+
+        FXMLLoader loader = new FXMLLoader(HeadController.class.getResource("/com/example/oop_application/menu.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
