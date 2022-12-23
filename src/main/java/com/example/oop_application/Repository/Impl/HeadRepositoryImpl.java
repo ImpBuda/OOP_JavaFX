@@ -2,12 +2,15 @@ package com.example.oop_application.Repository.Impl;
 
 import com.example.oop_application.Controller.HeadController;
 import com.example.oop_application.Model.Head;
+import com.example.oop_application.Model.LocalDateAdapter;
 import com.example.oop_application.Repository.HeadRepository;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +20,6 @@ public class HeadRepositoryImpl implements HeadRepository {
     public List<Head> patronymicSearch(String str) {
         List<Head> heads = new ArrayList<>(getAllHead());
         heads.removeIf(element -> !element.getPatronymic().toLowerCase().startsWith(str.toLowerCase()));
-        return heads;
-    }
-
-    @Override
-    public List<Head> instructionSearch(String str) {
-        List<Head> heads = new ArrayList<>(getAllHead());
-        heads.removeIf(element -> !element.getPatronymic().toString().startsWith(str));
         return heads;
     }
 
@@ -45,10 +41,11 @@ public class HeadRepositoryImpl implements HeadRepository {
     public List<Head> getAllHead() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(HeadController.filepath));
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
 
             Type headListType = new TypeToken<List<Head>>(){}.getType();
             List<Head> headList = gson.fromJson(reader, headListType);
+            System.out.println(headList);
             return headList;
         }
         catch (Exception e){
@@ -82,7 +79,7 @@ public class HeadRepositoryImpl implements HeadRepository {
         copy.setFirstName(head.getFirstName());
         copy.setLastName(head.getLastName());
         copy.setPatronymic(head.getPatronymic());
-        copy.setIdInstruction(head.getIdInstruction());
+        copy.setStudentList(head.getStudentList());
         try {
             List<Head> heads = new ArrayList<>(getAllHead());
 

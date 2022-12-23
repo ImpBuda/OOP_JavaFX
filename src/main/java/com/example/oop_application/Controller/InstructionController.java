@@ -224,7 +224,7 @@ public class InstructionController {
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         dateOfIndication.setCellValueFactory(new PropertyValueFactory<>("dateOfIndication"));
-        daysToComplete.setCellValueFactory(new PropertyValueFactory<>("dateOfIndication"));
+        daysToComplete.setCellValueFactory(new PropertyValueFactory<>("daysToComplete"));
         instruction.setCellValueFactory(new PropertyValueFactory<>("content"));
 
         table.setItems(instructions);

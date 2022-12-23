@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface StudentService {
 
- List<Student> instructionSearch(String str);
-
  List<Student> nameSearch(String str);
 
  List<Student> surnameSearch(String str);

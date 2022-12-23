@@ -3,20 +3,23 @@ package com.example.oop_application.Repository.Impl;
 import com.example.oop_application.Controller.InstructionController;
 import com.example.oop_application.Model.Instruction;
 import com.example.oop_application.Model.LocalDateAdapter;
+import com.example.oop_application.Model.Student;
 import com.example.oop_application.Repository.InstructionRepository;
+import com.example.oop_application.Repository.StudentRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class InstructionRepositoryImpl implements InstructionRepository {
 
-
+    StudentRepository studentRepository = new StudentRepositoryImpl();
 
     @Override
     public List<Instruction> contentSearch(String str) {
@@ -36,11 +39,12 @@ public class InstructionRepositoryImpl implements InstructionRepository {
     public List<Instruction> getAllInstruction() {
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(InstructionController.filepath));
-            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
-
-            Type instructionListType = new TypeToken<List<Instruction>>(){}.getType();
-            List<Instruction> instructionList = gson.fromJson(reader, instructionListType);
+            List<Student> studentList = studentRepository.getAllStudent();
+            List<Instruction> instructionList = new ArrayList<>();
+            ListIterator<Student> iter = studentList.listIterator();
+            while(iter.hasNext()){
+                instructionList.addAll(iter.next().getInstructionList());
+            }
             return instructionList;
         }
         catch (Exception e){

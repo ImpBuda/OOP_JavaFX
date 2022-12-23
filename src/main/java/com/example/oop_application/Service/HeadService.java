@@ -9,8 +9,6 @@ public interface HeadService {
 
     List<Head> patronymicSearch(String str);
 
-    List<Head> instructionSearch(String str);
-
     List<Head> nameSearch(String str);
 
     List<Head> surnameSearch(String str);

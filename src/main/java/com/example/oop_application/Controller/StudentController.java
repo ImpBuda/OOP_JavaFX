@@ -42,9 +42,6 @@ public class StudentController {
     private TextField findInput;
 
     @FXML
-    private RadioMenuItem instructionRadio;
-
-    @FXML
     private RadioMenuItem nameRadio;
 
     @FXML
@@ -58,9 +55,6 @@ public class StudentController {
 
     @FXML
     private TextField idInput;
-
-    @FXML
-    private TextField instructionInput;
 
     @FXML
     private TextField nameInput;
@@ -93,9 +87,6 @@ public class StudentController {
 
     @FXML
     private TableColumn<Student, Integer> id;
-
-    @FXML
-    private TableColumn<Student, Integer> idInstruction;
 
     @FXML
     private TableColumn<Student, String> lastName;
@@ -141,8 +132,8 @@ public class StudentController {
 
             btnAdd.setOnAction(actionEvent -> {
                     addPanel.setStyle("visibility: visible;");
-
-                    submit.setOnAction(action -> add());
+                    studentService.getAllStudents();
+                    /*submit.setOnAction(action -> add());*/
             });
 
 
@@ -167,7 +158,6 @@ public class StudentController {
         findInput.textProperty().addListener((observable, oldValue, newValue) -> {
             if (nameRadio.isSelected()) updateTable(studentService.nameSearch(newValue));
             else if (surnameRadio.isSelected()) updateTable(studentService.surnameSearch(newValue));
-            else if (instructionRadio.isSelected()) updateTable(studentService.instructionSearch(newValue));
         });
     }
 
@@ -178,7 +168,6 @@ public class StudentController {
             student.setId(Integer.valueOf(idInput.getText()));
             student.setFirstName(nameInput.getText());
             student.setLastName(surnameInput.getText());
-            student.setIdInstruction(Integer.valueOf(instructionInput.getText()));
             studentService.updateStudentById(id, student);
         }
         catch (Exception e){
@@ -196,7 +185,6 @@ public class StudentController {
             student.setId(Integer.valueOf(idInput.getText()));
             student.setFirstName(nameInput.getText());
             student.setLastName(surnameInput.getText());
-            student.setIdInstruction(Integer.valueOf(instructionInput.getText()));
             studentService.createStudent(student);
             updateTable(studentService.getAllStudents());
         }
@@ -233,7 +221,6 @@ public class StudentController {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        idInstruction.setCellValueFactory(new PropertyValueFactory<>("idInstruction"));
 
         table.setItems(students);
     }
@@ -246,14 +233,12 @@ public class StudentController {
         idInput.setText("");
         nameInput.setText("");
         surnameInput.setText("");
-        instructionInput.setText("");
     }
 
     private void fillingInput(){
         idInput.setText(table.getSelectionModel().getSelectedItem().getId().toString());
         nameInput.setText(table.getSelectionModel().getSelectedItem().getFirstName());
         surnameInput.setText(table.getSelectionModel().getSelectedItem().getLastName());
-        instructionInput.setText(table.getSelectionModel().getSelectedItem().getIdInstruction().toString());
     }
 
     private void backToMenu(){

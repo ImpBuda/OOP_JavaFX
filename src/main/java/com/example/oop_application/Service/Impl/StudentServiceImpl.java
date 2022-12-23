@@ -24,11 +24,6 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> instructionSearch(String str) {
-        return studentRepository.instructionSearch(str);
-    }
-
-    @Override
     public List<Student> surnameSearch(String str) {
         return studentRepository.surnameSearch(str);
     }
@@ -40,7 +35,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> getAllStudents() {
-        return studentRepository.getAllStudent();
+       return studentRepository.getAllStudent();
     }
 
     @Override

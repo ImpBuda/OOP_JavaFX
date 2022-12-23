@@ -1,7 +1,9 @@
 package com.example.oop_application.Repository.Impl;
 
 import com.example.oop_application.Controller.StudentController;
+import com.example.oop_application.Model.Head;
 import com.example.oop_application.Model.Student;
+import com.example.oop_application.Repository.HeadRepository;
 import com.example.oop_application.Repository.StudentRepository;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -9,12 +11,13 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class StudentRepositoryImpl implements StudentRepository {
 
+    HeadRepository headRepository = new HeadRepositoryImpl();
 
     @Override
     public List<Student> surnameSearch(String str) {
@@ -23,33 +26,6 @@ public class StudentRepositoryImpl implements StudentRepository {
         return students;
     }
 
-    @Override
-    public List<Student> instructionSearch(String str){
-        List<Student> students = new ArrayList<>(getAllStudent());
-        students.removeIf(element -> !element.getIdInstruction().toString().startsWith(str));
-        return students;
-    }
-
-    @Override
-    public void updateStudentById(int id, Student student) {
-        Student copy = getStudentById(id);
-        copy.setId(student.getId());
-        copy.setFirstName(student.getFirstName());
-        copy.setLastName(student.getLastName());
-        copy.setIdInstruction(student.getIdInstruction());
-        try {
-            List<Student> students = new ArrayList<>(getAllStudent());
-
-            students.set(students.indexOf(getStudentById(id)), copy);
-
-            Gson gson = new Gson();
-            PrintWriter out = new PrintWriter(new FileWriter(StudentController.filepath));
-            out.write(gson.toJson(students));
-            out.close();
-        } catch (Exception e) {
-            System.out.println("Error " + e);
-        }
-    }
 
     @Override
     public List<Student> nameSearch(String str) {
@@ -75,13 +51,36 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
+    public void updateStudentById(int id, Student student) {
+        Student copy = getStudentById(id);
+        copy.setId(student.getId());
+        copy.setFirstName(student.getFirstName());
+        copy.setLastName(student.getLastName());
+        copy.setInstructionList(student.getInstructionList());
+        try {
+            List<Student> students = new ArrayList<>(getAllStudent());
+
+            students.set(students.indexOf(getStudentById(id)), copy);
+
+            Gson gson = new Gson();
+            PrintWriter out = new PrintWriter(new FileWriter(StudentController.filepath));
+            out.write(gson.toJson(students));
+            out.close();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+    }
+
+    @Override
     public List<Student> getAllStudent()  {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(StudentController.filepath));
-            Gson gson = new Gson();
-
-            Type studentListType = new TypeToken<List<Student>>(){}.getType();
-            List<Student> studentList = gson.fromJson(reader, studentListType);
+            List<Head> headList = headRepository.getAllHead();
+            List<Student> studentList = new ArrayList<>();
+            ListIterator<Head> iter = headList.listIterator();
+            while(iter.hasNext()){
+                studentList.addAll(iter.next().getStudentList());
+            }
+            /*for (Head head : headList) studentList.addAll(head.getStudentList());*/
             return studentList;
         }
        catch (Exception e){

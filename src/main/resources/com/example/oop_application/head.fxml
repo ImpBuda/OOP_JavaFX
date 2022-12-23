@@ -17,13 +17,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="911.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.HeadController">
    <children>
-      <TableView fx:id="table" layoutX="14.0" layoutY="160.0" prefHeight="387.0" prefWidth="543.0">
+      <TableView fx:id="table" layoutX="14.0" layoutY="160.0" prefHeight="387.0" prefWidth="414.0">
         <columns>
           <TableColumn fx:id="id" prefWidth="75.0" text="Номер" />
           <TableColumn fx:id="firstName" prefWidth="93.0" text="Имя" />
             <TableColumn fx:id="lastName" prefWidth="90.0" text="Фамилия" />
             <TableColumn fx:id="patronymic" prefWidth="156.0" text="Отчество" />
-            <TableColumn fx:id="idInstruction" prefWidth="128.0" text="Номер поручения" />
         </columns>
       </TableView>
       <Label layoutX="346.0" layoutY="14.0" prefHeight="58.0" prefWidth="299.0" text="Преподаватели">
@@ -60,7 +59,6 @@
             <TextField fx:id="idInput" layoutX="13.0" layoutY="14.0" promptText="Номер" />
             <TextField fx:id="nameInput" layoutX="13.0" layoutY="49.0" promptText="Имя" />
             <TextField fx:id="surnameInput" layoutX="13.0" layoutY="84.0" promptText="Фамилия" />
-            <TextField fx:id="instructionInput" layoutX="13.0" layoutY="152.0" promptText="Номер поручения" />
             <Button fx:id="submit" layoutX="13.0" layoutY="207.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Принять" />
             <Button fx:id="cancel" layoutX="13.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Отмена" />
             <TextField fx:id="patronymicInput" layoutX="13.0" layoutY="119.0" promptText="Отчество" />
@@ -78,7 +76,6 @@
                   </RadioMenuItem>
                   <RadioMenuItem fx:id="surnameRadio" mnemonicParsing="false" text="Фамилия" toggleGroup="$find" />
                   <RadioMenuItem fx:id="patronymicRadio" mnemonicParsing="false" text="Отчество" toggleGroup="$find" />
-                  <RadioMenuItem fx:id="instructionRadio" mnemonicParsing="false" text="Номер поручения" toggleGroup="$find" />
             </items>
           </Menu>
         </menus>

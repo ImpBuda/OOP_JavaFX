@@ -2,6 +2,8 @@ package com.example.oop_application.Model;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Head {
 
@@ -13,5 +15,5 @@ public class Head {
 
     private String patronymic;
 
-    private Integer idInstruction;
+    private List<Student> studentList;
 }

@@ -13,5 +13,5 @@ public class Instruction {
 
     private LocalDate dateOfIndication;
 
-    private Integer DaysToComplete;
+    private Integer daysToComplete;
 }

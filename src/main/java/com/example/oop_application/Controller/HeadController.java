@@ -31,8 +31,6 @@ public class HeadController {
     @FXML
     private TextField findInput;
 
-    @FXML
-    private RadioMenuItem instructionRadio;
 
     @FXML
     private RadioMenuItem nameRadio;
@@ -52,8 +50,6 @@ public class HeadController {
     @FXML
     private TextField idInput;
 
-    @FXML
-    private TextField instructionInput;
 
     @FXML
     private TextField nameInput;
@@ -90,9 +86,6 @@ public class HeadController {
 
     @FXML
     private TableColumn<Head, Integer> id;
-
-    @FXML
-    private TableColumn<Head, Integer> idInstruction;
 
     @FXML
     private TableColumn<Head, String> patronymic;
@@ -168,7 +161,6 @@ public class HeadController {
             if (nameRadio.isSelected()) updateTable(headService.nameSearch(newValue));
             else if (surnameRadio.isSelected()) updateTable(headService.surnameSearch(newValue));
             else if (patronymicRadio.isSelected()) updateTable(headService.patronymicSearch(newValue));
-            else if (instructionRadio.isSelected()) updateTable(headService.instructionSearch(newValue));
         });
     }
 
@@ -180,7 +172,7 @@ public class HeadController {
             head.setFirstName(nameInput.getText());
             head.setLastName(surnameInput.getText());
             head.setPatronymic(patronymicInput.getText());
-            head.setIdInstruction(Integer.valueOf(instructionInput.getText()));
+            head.setStudentList(headService.getHeadById(id).getStudentList());
             headService.updateHeadById(id, head);
         }
         catch (Exception e){
@@ -195,11 +187,12 @@ public class HeadController {
                 modalWindow("Преподаватель с таким номером уже существует");
             }
             Head head = new Head();
-            head.setId(Integer.valueOf(idInput.getText()));
+            int id = Integer.parseInt(idInput.getText());
+            head.setId(id);
             head.setFirstName(nameInput.getText());
             head.setLastName(surnameInput.getText());
             head.setPatronymic(patronymicInput.getText());
-            head.setIdInstruction(Integer.valueOf(instructionInput.getText()));
+            head.setStudentList(headService.getHeadById(id).getStudentList());
             headService.saveHead(head);
             updateTable(headService.getAllHead());
         }
@@ -237,7 +230,6 @@ public class HeadController {
         firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         patronymic.setCellValueFactory(new PropertyValueFactory<>("patronymic"));
-        idInstruction.setCellValueFactory(new PropertyValueFactory<>("idInstruction"));
 
         table.setItems(heads);
     }
@@ -250,14 +242,12 @@ public class HeadController {
         idInput.setText("");
         nameInput.setText("");
         surnameInput.setText("");
-        instructionInput.setText("");
     }
 
     private void fillingInput(){
         idInput.setText(table.getSelectionModel().getSelectedItem().getId().toString());
         nameInput.setText(table.getSelectionModel().getSelectedItem().getFirstName());
         surnameInput.setText(table.getSelectionModel().getSelectedItem().getLastName());
-        instructionInput.setText(table.getSelectionModel().getSelectedItem().getIdInstruction().toString());
     }
 
     private void backToMenu(){

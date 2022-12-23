@@ -16,11 +16,6 @@ public class HeadServiceImpl implements HeadService {
     public List<Head> patronymicSearch(String str) {return headRepository.patronymicSearch(str);}
 
     @Override
-    public List<Head> instructionSearch(String str) {
-       return headRepository.instructionSearch(str);
-    }
-
-    @Override
     public List<Head> nameSearch(String str) {
         return headRepository.nameSearch(str);
     }

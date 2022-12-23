@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.List;
 
 public interface HeadRepository {
-    List<Head> instructionSearch(String str);
 
     List<Head> patronymicSearch(String str);
 
@@ -14,7 +13,7 @@ public interface HeadRepository {
 
     List<Head> surnameSearch(String str);
 
-    List<Head> getAllHead() ;
+    List<Head> getAllHead();
 
     void deleteHeadById(int id);
 
