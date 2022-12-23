@@ -76,11 +76,7 @@ public class StudentRepositoryImpl implements StudentRepository {
         try {
             List<Head> headList = headRepository.getAllHead();
             List<Student> studentList = new ArrayList<>();
-            ListIterator<Head> iter = headList.listIterator();
-            while(iter.hasNext()){
-                studentList.addAll(iter.next().getStudentList());
-            }
-            /*for (Head head : headList) studentList.addAll(head.getStudentList());*/
+            for (Head head : headList) studentList.addAll(head.getStudentList());
             return studentList;
         }
        catch (Exception e){

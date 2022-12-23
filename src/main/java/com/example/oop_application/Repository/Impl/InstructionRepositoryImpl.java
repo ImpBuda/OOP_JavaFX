@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class InstructionRepositoryImpl implements InstructionRepository {
 
@@ -41,10 +40,7 @@ public class InstructionRepositoryImpl implements InstructionRepository {
         try {
             List<Student> studentList = studentRepository.getAllStudent();
             List<Instruction> instructionList = new ArrayList<>();
-            ListIterator<Student> iter = studentList.listIterator();
-            while(iter.hasNext()){
-                instructionList.addAll(iter.next().getInstructionList());
-            }
+            for (Student student : studentList) instructionList.addAll(student.getInstructionList());
             return instructionList;
         }
         catch (Exception e){
