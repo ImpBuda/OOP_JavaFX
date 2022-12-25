@@ -168,7 +168,9 @@ public class StudentController {
 
         try {
             if(headService.getHeadById(Integer.parseInt(headIdInput.getText())) == null)
-                modalWindow("Студент с таким номером не существует");
+                modalWindow("Преподаватель с таким номером не существует");
+            if(studentService.getStudentById(Integer.parseInt(idInput.getText())) != null)
+                modalWindow("Студент с таким уже существует");
             Student student = new Student();
             student.setId(Integer.valueOf(idInput.getText()));
             student.setFirstName(nameInput.getText());
