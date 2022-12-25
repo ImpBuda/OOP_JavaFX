@@ -48,8 +48,4 @@ public class InstructionServiceImpl implements InstructionService {
         return instructionRepository.getInstructionById(id);
     }
 
-    @Override
-    public void saveFileSystem(File saveFile) {
-        instructionRepository.saveFileSystem(saveFile);
-    }
 }

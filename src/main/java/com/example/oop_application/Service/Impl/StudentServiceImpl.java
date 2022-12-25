@@ -19,11 +19,6 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void saveFileSystem(File saveFile) {
-        studentRepository.saveFileSystem(saveFile);
-    }
-
-    @Override
     public List<Student> surnameSearch(String str) {
         return studentRepository.surnameSearch(str);
     }

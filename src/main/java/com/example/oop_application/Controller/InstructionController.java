@@ -1,8 +1,11 @@
 package com.example.oop_application.Controller;
 
+import com.example.oop_application.Model.Context;
 import com.example.oop_application.Model.Instruction;
 import com.example.oop_application.Service.Impl.InstructionServiceImpl;
+import com.example.oop_application.Service.Impl.StudentServiceImpl;
 import com.example.oop_application.Service.InstructionService;
+import com.example.oop_application.Service.StudentService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,7 +30,13 @@ public class InstructionController {
 
     private final InstructionService instructionService = new InstructionServiceImpl();
 
-    static public String filepath;
+    private final StudentService studentService = new StudentServiceImpl();
+
+    @FXML
+    public TableColumn<Instruction, Integer> studentId;
+
+    @FXML
+    public TextField studentIdInput;
 
     @FXML
     private AnchorPane addPanel;
@@ -96,26 +105,8 @@ public class InstructionController {
     @FXML
     void initialize(){
 
-        back.setOnAction(actionEvent -> backToMenu());
-
-        btnSave.setOnAction(actionEvent -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
-            File file = fileChooser.showSaveDialog(btnSave.getScene().getWindow());
-            if(file != null) {
-                instructionService.saveFileSystem(file);
-            }
-        });
-
-        btnOpen.setOnAction(actionEvent -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
-            File file = fileChooser.showOpenDialog(btnOpen.getScene().getWindow());
-            if (file != null) {
-                filepath = file.getPath();
-                updateTable(instructionService.getAllInstruction());
-            }
-        });
+        if(Context.filepath != null)
+            updateTable(instructionService.getAllInstruction());
 
         btnDelete.setOnAction(actionEvent -> {
             if(!table.getSelectionModel().isEmpty()) {
@@ -135,7 +126,10 @@ public class InstructionController {
         btnAdd.setOnAction(actionEvent -> {
             addPanel.setStyle("visibility: visible;");
 
-            submit.setOnAction(action -> add());
+            submit.setOnAction(action -> {
+                add();
+                updateTable(instructionService.getAllInstruction());
+            });
         });
 
 
@@ -165,13 +159,16 @@ public class InstructionController {
 
     private void update(){
         try {
+            if(studentService.getStudentById(Integer.parseInt(studentIdInput.getText())) == null)
+                modalWindow("Студент с таким номером не существует");
             Instruction instruction = new Instruction();
             int id = table.getSelectionModel().getSelectedItem().getId();
             instruction.setId(Integer.valueOf(idInput.getText()));
             instruction.setContent(instructionInput.getText());
             instruction.setDateOfIndication(LocalDate.parse(dateOfIndicationInput.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             instruction.setDaysToComplete(Integer.valueOf(daysToCompleteInput.getText()));
-           instructionService.updateInstructionById(id, instruction);
+            instruction.setStudent_id(Integer.valueOf(studentIdInput.getText()));
+            instructionService.updateInstructionById(id, instruction);
         }
         catch (Exception e){
             modalWindow("Неправильно введены данные");
@@ -181,16 +178,17 @@ public class InstructionController {
     private void add() {
 
         try {
-            if(instructionService.getInstructionById(Integer.parseInt(idInput.getText())) != null){
-                modalWindow("Студент с таким номером уже существует");
-            }
+            if(instructionService.getInstructionById(Integer.parseInt(idInput.getText())) != null)
+                modalWindow("Поручение с таким номером уже существует");
+            if(studentService.getStudentById(Integer.parseInt(studentIdInput.getText())) == null)
+                modalWindow("Студент с таким номером не существует");
             Instruction instruction = new Instruction();
             instruction.setId(Integer.valueOf(idInput.getText()));
             instruction.setContent(instructionInput.getText());
-            instruction.setDateOfIndication(LocalDate.parse(dateOfIndicationInput.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            instruction.setDateOfIndication(LocalDate.parse(dateOfIndicationInput.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             instruction.setDaysToComplete(Integer.valueOf(daysToCompleteInput.getText()));
+            instruction.setStudent_id(Integer.valueOf(studentIdInput.getText()));
             instructionService.saveInstruction(instruction);
-            updateTable(instructionService.getAllInstruction());
         }
         catch (Exception e) {
             modalWindow("Неправильно введены данные");
@@ -226,6 +224,7 @@ public class InstructionController {
         dateOfIndication.setCellValueFactory(new PropertyValueFactory<>("dateOfIndication"));
         daysToComplete.setCellValueFactory(new PropertyValueFactory<>("daysToComplete"));
         instruction.setCellValueFactory(new PropertyValueFactory<>("content"));
+        studentId.setCellValueFactory(new PropertyValueFactory<>("student_id"));
 
         table.setItems(instructions);
     }
@@ -239,29 +238,14 @@ public class InstructionController {
         instructionInput.setText("");
         dateOfIndicationInput.setText("");
         daysToCompleteInput.setText("");
+        studentIdInput.setText("");
     }
 
     private void fillingInput(){
         idInput.setText(table.getSelectionModel().getSelectedItem().getId().toString());
         instructionInput.setText(table.getSelectionModel().getSelectedItem().getContent());
-        dateOfIndicationInput.setText(table.getSelectionModel().getSelectedItem().getDateOfIndication().toString());
+        /*dateOfIndicationInput.setText(table.getSelectionModel().getSelectedItem().getDateOfIndication().toString());*/
         daysToCompleteInput.setText(table.getSelectionModel().getSelectedItem().getDaysToComplete().toString());
-    }
-
-    private void backToMenu(){
-        back.getScene().getWindow().hide();
-
-        FXMLLoader loader = new FXMLLoader(HeadController.class.getResource("/com/example/oop_application/menu.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
+        studentIdInput.setText(table.getSelectionModel().getSelectedItem().getStudent_id().toString());
     }
 }

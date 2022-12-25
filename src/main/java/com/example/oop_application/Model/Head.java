@@ -1,5 +1,6 @@
 package com.example.oop_application.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public class Head {
     private String patronymic;
 
     private List<Student> studentList;
+
 }

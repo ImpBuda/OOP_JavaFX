@@ -3,6 +3,7 @@ module com.example.oop_application {
     requires javafx.fxml;
     requires lombok;
     requires com.google.gson;
+    requires com.fasterxml.jackson.annotation;
 
     opens com.example.oop_application to javafx.fxml;
     opens com.example.oop_application.Controller to javafx.fxml;

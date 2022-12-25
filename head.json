@@ -1,1 +1,54 @@
-[{"id":3,"firstName":"lelya","lastName":"chmo","patronymic":"sdgsdg", "studentList":[{"id":3,"firstName":"yura","lastName":"kirill", "instructionList":[{"id":5, "content":"dsg", "dateOfIndication":"2000-05-05", "daysToComplete":5}]},{"id":3,"firstName":"yura","lastName":"kirill", "instructionList":[{"id":6, "content":"dfhfdh", "dateOfIndication":"2000-05-05", "daysToComplete":5}]}]}]
+[
+  {
+    "id": 5,
+    "firstName": "pr",
+    "lastName": "pr",
+    "patronymic": "rv",
+    "studentList": [
+      {
+        "id": 556,
+        "firstName": "memo",
+        "lastName": "memo",
+        "head_id": 5,
+        "instructionList": []
+      },
+      {
+        "id": 557,
+        "firstName": "me",
+        "lastName": "memo",
+        "head_id": 5,
+        "instructionList": []
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "firstName": "gg",
+    "lastName": "gf",
+    "patronymic": "jj",
+    "studentList": [
+      {
+        "id": 566,
+        "firstName": "rac",
+        "lastName": "rack",
+        "head_id": 6,
+        "instructionList": [
+          {
+            "id": 5,
+            "content": "fdh",
+            "dateOfIndication": "2000-06-06",
+            "daysToComplete": 5,
+            "student_id": 566
+          },
+          {
+            "id": 6,
+            "content": "xcbxc",
+            "dateOfIndication": "2000-06-05",
+            "daysToComplete": 5,
+            "student_id": 566
+          }
+        ]
+      }
+    ]
+  }
+]

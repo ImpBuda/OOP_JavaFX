@@ -17,7 +17,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="911.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.HeadController">
    <children>
-      <TableView fx:id="table" layoutX="14.0" layoutY="160.0" prefHeight="387.0" prefWidth="414.0">
+      <TableView fx:id="table" layoutX="14.0" layoutY="166.0" prefHeight="387.0" prefWidth="414.0">
         <columns>
           <TableColumn fx:id="id" prefWidth="75.0" text="Номер" />
           <TableColumn fx:id="firstName" prefWidth="93.0" text="Имя" />
@@ -51,17 +51,17 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Button fx:id="btnDelete" layoutX="14.0" layoutY="112.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Удалить " textFill="#689dff" />
-      <Button fx:id="btnUpdate" layoutX="201.0" layoutY="112.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Редактировать " textFill="#689dff" />
-      <Button fx:id="btnAdd" layoutX="385.0" layoutY="112.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Добавить" textFill="#689dff" />
-      <AnchorPane fx:id="addPanel" layoutX="563.0" layoutY="243.0" prefHeight="304.0" prefWidth="178.0" style="-fx-background-color: white; visibility: hidden;">
+      <Button fx:id="btnDelete" layoutX="440.0" layoutY="166.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Удалить " textFill="#689dff" />
+      <Button fx:id="btnUpdate" layoutX="440.0" layoutY="216.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Редактировать " textFill="#689dff" />
+      <Button fx:id="btnAdd" layoutX="440.0" layoutY="265.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Добавить" textFill="#689dff" />
+      <AnchorPane fx:id="addPanel" layoutX="440.0" layoutY="332.0" prefHeight="221.0" prefWidth="178.0" style="-fx-background-color: white; visibility: hidden;">
          <children>
-            <TextField fx:id="idInput" layoutX="13.0" layoutY="14.0" promptText="Номер" />
-            <TextField fx:id="nameInput" layoutX="13.0" layoutY="49.0" promptText="Имя" />
-            <TextField fx:id="surnameInput" layoutX="13.0" layoutY="84.0" promptText="Фамилия" />
-            <Button fx:id="submit" layoutX="13.0" layoutY="207.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Принять" />
-            <Button fx:id="cancel" layoutX="13.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Отмена" />
-            <TextField fx:id="patronymicInput" layoutX="13.0" layoutY="119.0" promptText="Отчество" />
+            <TextField fx:id="idInput" layoutX="14.0" layoutY="14.0" promptText="Номер" />
+            <TextField fx:id="nameInput" layoutX="15.0" layoutY="47.0" promptText="Имя" />
+            <TextField fx:id="surnameInput" layoutX="15.0" layoutY="83.0" promptText="Фамилия" />
+            <Button fx:id="submit" layoutX="14.0" layoutY="153.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Принять" />
+            <Button fx:id="cancel" layoutX="14.0" layoutY="185.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Отмена" />
+            <TextField fx:id="patronymicInput" layoutX="15.0" layoutY="117.0" promptText="Отчество" />
          </children>
       </AnchorPane>
       <TextField fx:id="findInput" layoutX="43.0" layoutY="18.0" prefHeight="25.0" prefWidth="268.0" promptText="Введите, что хотите найти" />
@@ -81,7 +81,8 @@
         </menus>
       </MenuBar>
       <Button fx:id="btnOpen" layoutX="758.0" layoutY="505.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="открыть" />
-      <Button fx:id="back" layoutX="734.0" layoutY="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Назад" />
       <Button fx:id="btnSave" layoutX="758.0" layoutY="458.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Сохранить как" />
+      <Button fx:id="studentmodel" layoutX="736.0" layoutY="30.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="142.0" text="Перейти к студентам" />
+      <Button fx:id="instructionmodel" layoutX="737.0" layoutY="73.0" mnemonicParsing="false" text="Перейти к поручениям" />
    </children>
 </AnchorPane>

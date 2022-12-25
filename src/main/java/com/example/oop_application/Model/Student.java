@@ -13,5 +13,8 @@ public class Student {
 
     private String lastName;
 
+    private Integer head_id;
+
     private List<Instruction> instructionList;
+
 }

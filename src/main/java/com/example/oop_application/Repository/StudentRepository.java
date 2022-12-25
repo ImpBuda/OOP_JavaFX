@@ -21,6 +21,4 @@ public interface StudentRepository {
 
     Student getStudentById(int id);
 
-    void saveFileSystem(File saveFile);
-
 }

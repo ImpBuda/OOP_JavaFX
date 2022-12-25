@@ -1,6 +1,11 @@
 package com.example.oop_application.Controller;
 
+import com.example.oop_application.Model.Context;
+import com.example.oop_application.Model.Instruction;
 import com.example.oop_application.Model.Student;
+import com.example.oop_application.Repository.HeadRepository;
+import com.example.oop_application.Service.HeadService;
+import com.example.oop_application.Service.Impl.HeadServiceImpl;
 import com.example.oop_application.Service.Impl.StudentServiceImpl;
 import com.example.oop_application.Service.StudentService;
 import javafx.collections.FXCollections;
@@ -22,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,10 +36,13 @@ public class StudentController {
 
     private final StudentService studentService = new StudentServiceImpl();
 
-    static public String filepath;
+    private final HeadService headService = new HeadServiceImpl();
 
     @FXML
-    public Button btnSave;
+    public TextField headIdInput;
+
+    @FXML
+    public TableColumn<Student, Integer> headId;
 
     @FXML
     private ToggleGroup find;
@@ -68,16 +77,11 @@ public class StudentController {
     @FXML
     private Button btnAdd;
 
-    @FXML Button back;
-
     @FXML
     private Button btnDelete;
 
     @FXML
     private Button btnUpdate;
-
-    @FXML
-    private Button btnOpen;
 
     @FXML
     private TableView<Student> table;
@@ -93,27 +97,8 @@ public class StudentController {
 
     @FXML
     void initialize(){
-
-        back.setOnAction(actionEvent -> backToMenu());
-
-        btnSave.setOnAction(actionEvent -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
-            File file = fileChooser.showSaveDialog(btnSave.getScene().getWindow());
-            if(file != null) {
-                studentService.saveFileSystem(file);
-            }
-        });
-
-        btnOpen.setOnAction(actionEvent -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
-            File file = fileChooser.showOpenDialog(btnOpen.getScene().getWindow());
-            if (file != null) {
-                filepath = file.getPath();
-                updateTable(studentService.getAllStudents());
-            }
-        });
+        if (Context.filepath != null)
+            updateTable(studentService.getAllStudents());
 
             btnDelete.setOnAction(actionEvent -> {
                 if(!table.getSelectionModel().isEmpty()) {
@@ -132,8 +117,10 @@ public class StudentController {
 
             btnAdd.setOnAction(actionEvent -> {
                     addPanel.setStyle("visibility: visible;");
-                    studentService.getAllStudents();
-                    /*submit.setOnAction(action -> add());*/
+                    submit.setOnAction(action -> {
+                        add();
+                        updateTable(studentService.getAllStudents());
+                    });
             });
 
 
@@ -168,6 +155,8 @@ public class StudentController {
             student.setId(Integer.valueOf(idInput.getText()));
             student.setFirstName(nameInput.getText());
             student.setLastName(surnameInput.getText());
+            student.setHead_id(Integer.valueOf(headIdInput.getText()));
+            student.setInstructionList(studentService.getStudentById(id).getInstructionList());
             studentService.updateStudentById(id, student);
         }
         catch (Exception e){
@@ -178,15 +167,14 @@ public class StudentController {
     private void add() {
 
         try {
-            if(studentService.getStudentById(Integer.parseInt(idInput.getText())) != null){
-                modalWindow("Студент с таким номером уже существует");
-            }
+            if(headService.getHeadById(Integer.parseInt(headIdInput.getText())) == null)
+                modalWindow("Студент с таким номером не существует");
             Student student = new Student();
             student.setId(Integer.valueOf(idInput.getText()));
             student.setFirstName(nameInput.getText());
             student.setLastName(surnameInput.getText());
+            student.setHead_id(Integer.valueOf(headIdInput.getText()));
             studentService.createStudent(student);
-            updateTable(studentService.getAllStudents());
         }
         catch (Exception e) {
             modalWindow("Неправильно введены данные");
@@ -221,7 +209,7 @@ public class StudentController {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-
+        headId.setCellValueFactory(new PropertyValueFactory<>("head_id"));
         table.setItems(students);
     }
 
@@ -233,27 +221,14 @@ public class StudentController {
         idInput.setText("");
         nameInput.setText("");
         surnameInput.setText("");
+        headIdInput.setText("");
     }
 
     private void fillingInput(){
         idInput.setText(table.getSelectionModel().getSelectedItem().getId().toString());
         nameInput.setText(table.getSelectionModel().getSelectedItem().getFirstName());
         surnameInput.setText(table.getSelectionModel().getSelectedItem().getLastName());
+        headIdInput.setText(table.getSelectionModel().getSelectedItem().getHead_id().toString());
     }
 
-    private void backToMenu(){
-        back.getScene().getWindow().hide();
-
-        FXMLLoader loader = new FXMLLoader(HeadController.class.getResource("/com/example/oop_application/menu.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
 }

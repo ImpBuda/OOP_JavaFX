@@ -1,9 +1,8 @@
 package com.example.oop_application.Repository.Impl;
 
 import com.example.oop_application.Controller.InstructionController;
-import com.example.oop_application.Model.Instruction;
-import com.example.oop_application.Model.LocalDateAdapter;
-import com.example.oop_application.Model.Student;
+import com.example.oop_application.Model.*;
+import com.example.oop_application.Repository.HeadRepository;
 import com.example.oop_application.Repository.InstructionRepository;
 import com.example.oop_application.Repository.StudentRepository;
 import com.google.gson.Gson;
@@ -19,6 +18,7 @@ import java.util.List;
 public class InstructionRepositoryImpl implements InstructionRepository {
 
     StudentRepository studentRepository = new StudentRepositoryImpl();
+    ;
 
     @Override
     public List<Instruction> contentSearch(String str) {
@@ -51,17 +51,18 @@ public class InstructionRepositoryImpl implements InstructionRepository {
 
     @Override
     public void deleteInstructionById(int id) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+
         try {
+            Instruction instruction = getInstructionById(id);
+            Student student = studentRepository.getStudentById(instruction.getStudent_id());
             List<Instruction> instructions = new ArrayList<>(getAllInstruction());
 
             for(int i = 0; i < instructions.size(); i++)
                 if(instructions.get(i).getId() == id)
                     instructions.remove(i);
 
-            PrintWriter out = new PrintWriter(new FileWriter(InstructionController.filepath));
-            out.write(gson.toJson(instructions));
-            out.close();
+            student.setInstructionList(instructions);
+            studentRepository.updateStudentById(student.getId(), student);
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
@@ -69,20 +70,26 @@ public class InstructionRepositoryImpl implements InstructionRepository {
 
     @Override
     public void updateInstructionById(int id, Instruction instruction) {
+        Student student = studentRepository.getStudentById(instruction.getStudent_id());
         Instruction copy = getInstructionById(id);
         copy.setId(instruction.getId());
         copy.setContent(instruction.getContent());
         copy.setDateOfIndication(instruction.getDateOfIndication());
         copy.setDaysToComplete(instruction.getDaysToComplete());
+        copy.setStudent_id(instruction.getStudent_id());
         try {
             List<Instruction> instructions = new ArrayList<>(getAllInstruction());
 
-            instructions .set(instructions .indexOf(getInstructionById(id)), copy);
-
-            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
-            PrintWriter out = new PrintWriter(new FileWriter(InstructionController.filepath));
-            out.write(gson.toJson(instructions ));
-            out.close();
+            for (int i = 0 ; i < instructions.size(); i++){
+                if (instructions.get(i).getId() == id){
+                    instructions.remove(i);
+                    instructions.add(i, copy);
+                }
+            }
+            if(studentRepository.getStudentById(instruction.getStudent_id()) != null) {
+                student.setInstructionList(instructions);
+                studentRepository.updateStudentById(student.getId(), student);
+            }
         } catch (Exception e) {
             System.out.println("Error " + e);
         }
@@ -91,21 +98,15 @@ public class InstructionRepositoryImpl implements InstructionRepository {
     @Override
     public void saveInstruction(Instruction instruction) {
         try {
-            if(InstructionController.filepath == null){
-                File file = new File( "local.json");
-
-                PrintWriter writer = new PrintWriter(file);
-                writer.write("[]");
-                writer.close();
-                InstructionController.filepath = file.getPath();
-            }
-            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
-            List<Instruction> instructions = new ArrayList<>(getAllInstruction());
-            if(getInstructionById(instruction.getId()) == null){
+            Student student = studentRepository.getStudentById(instruction.getStudent_id());
+            List<Instruction> instructions = new ArrayList<>();
+            if (student.getInstructionList() != null)
+                instructions = new ArrayList<>(student.getInstructionList());
+            if(getInstructionById(instruction.getId()) == null &&
+                    studentRepository.getStudentById(instruction.getStudent_id()) != null){
                 instructions.add(instruction);
-                PrintWriter out = new PrintWriter(new FileWriter(InstructionController.filepath));
-                out.write(gson.toJson(instructions));
-                out.close();
+                student.setInstructionList(instructions);
+                studentRepository.updateStudentById(student.getId(), student);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -113,10 +114,8 @@ public class InstructionRepositoryImpl implements InstructionRepository {
     }
     @Override
     public Instruction getInstructionById(int id) {
-
-        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
-        try (FileReader reader = new FileReader(InstructionController.filepath)) {
-            List<Instruction> instructions = gson.fromJson(reader, new TypeToken<List<Instruction>>() {}.getType());
+        try {
+            List<Instruction> instructions = new ArrayList<>(getAllInstruction());
             for (Instruction instruction : instructions) {
                 if (instruction.getId() == id) {
                     return instruction;
@@ -129,17 +128,4 @@ public class InstructionRepositoryImpl implements InstructionRepository {
         return null;
     }
 
-    @Override
-    public void saveFileSystem(File saveFile) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
-        List<Instruction> instructions = new ArrayList<>(getAllInstruction());
-
-        try {  PrintWriter out = new PrintWriter(new FileWriter(saveFile.getPath()));
-            out.write(gson.toJson(instructions));
-            out.close();
-
-        }catch (Exception e) {
-            System.out.println("Error: " + e);
-        }
-    }
 }

@@ -15,17 +15,18 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="911.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.InstructionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="752.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.InstructionController">
    <children>
-      <TableView fx:id="table" layoutX="170.0" layoutY="160.0" prefHeight="387.0" prefWidth="419.0">
+      <TableView fx:id="table" layoutX="11.0" layoutY="160.0" prefHeight="387.0" prefWidth="552.0">
         <columns>
           <TableColumn fx:id="id" prefWidth="75.0" text="Номер" />
           <TableColumn fx:id="instruction" prefWidth="93.0" text="Поручение" />
             <TableColumn fx:id="dateOfIndication" prefWidth="117.0" text="Дата поручения" />
             <TableColumn fx:id="daysToComplete" prefWidth="133.0" text="Дней на выполнение" />
+            <TableColumn fx:id="studentId" prefWidth="133.0" text="Номер студента" />
         </columns>
       </TableView>
-      <Label layoutX="398.0" layoutY="14.0" prefHeight="58.0" prefWidth="218.0" text="Поручения">
+      <Label layoutX="333.0" layoutY="14.0" prefHeight="58.0" prefWidth="218.0" text="Поручения">
          <font>
             <Font size="40.0" />
          </font>
@@ -51,17 +52,18 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Button fx:id="btnDelete" layoutX="14.0" layoutY="354.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="143.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Удалить " textFill="#689dff" />
-      <Button fx:id="btnUpdate" layoutX="14.0" layoutY="294.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="143.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Редактировать " textFill="#689dff" />
-      <Button fx:id="btnAdd" layoutX="14.0" layoutY="235.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="143.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Добавить" textFill="#689dff" />
-      <AnchorPane fx:id="addPanel" layoutX="596.0" layoutY="284.0" prefHeight="257.0" prefWidth="178.0" style="-fx-background-color: white; visibility: hidden;">
+      <Button fx:id="btnDelete" layoutX="384.0" layoutY="113.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="143.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Удалить " textFill="#689dff" />
+      <Button fx:id="btnUpdate" layoutX="215.0" layoutY="113.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="143.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Редактировать " textFill="#689dff" />
+      <Button fx:id="btnAdd" layoutX="33.0" layoutY="113.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="143.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Добавить" textFill="#689dff" />
+      <AnchorPane fx:id="addPanel" layoutX="570.0" layoutY="221.0" prefHeight="325.0" prefWidth="178.0" style="-fx-background-color: white; visibility: hidden;">
          <children>
             <TextField fx:id="idInput" layoutX="13.0" layoutY="14.0" promptText="Номер" />
             <TextField fx:id="instructionInput" layoutX="13.0" layoutY="49.0" promptText="Поручение" />
             <TextField fx:id="dateOfIndicationInput" layoutX="13.0" layoutY="84.0" promptText="dd-mm-yyyy" />
-            <Button fx:id="submit" layoutX="13.0" layoutY="168.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Принять" />
-            <Button fx:id="cancel" layoutX="15.0" layoutY="214.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Отмена" />
+            <Button fx:id="submit" layoutX="13.0" layoutY="214.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Принять" />
+            <Button fx:id="cancel" layoutX="13.0" layoutY="256.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Отмена" />
             <TextField fx:id="daysToCompleteInput" layoutX="13.0" layoutY="119.0" promptText="Дней на выполнение" />
+            <TextField fx:id="studentIdInput" layoutX="13.0" layoutY="156.0" promptText="Номер студента" />
          </children>
       </AnchorPane>
       <TextField fx:id="findInput" layoutX="43.0" layoutY="18.0" prefHeight="25.0" prefWidth="268.0" promptText="Введите, что хотите найти" />
@@ -79,8 +81,5 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Button fx:id="btnOpen" layoutX="789.0" layoutY="502.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="открыть" />
-      <Button fx:id="back" layoutX="734.0" layoutY="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Назад" />
-      <Button fx:id="btnSave" layoutX="789.0" layoutY="457.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Сохранить как" />
    </children>
 </AnchorPane>

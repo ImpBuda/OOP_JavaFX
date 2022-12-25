@@ -1,6 +1,7 @@
 package com.example.oop_application.Repository.Impl;
 
 import com.example.oop_application.Controller.StudentController;
+import com.example.oop_application.Model.Context;
 import com.example.oop_application.Model.Head;
 import com.example.oop_application.Model.Student;
 import com.example.oop_application.Repository.HeadRepository;
@@ -35,37 +36,28 @@ public class StudentRepositoryImpl implements StudentRepository {
         return students;
     }
 
-    @Override
-    public void saveFileSystem(File saveFile) {
-        Gson gson = new Gson();
-        List<Student> students = new ArrayList<>(getAllStudent());
-
-        try {  PrintWriter out = new PrintWriter(new FileWriter(saveFile.getPath()));
-            out.write(gson.toJson(students));
-            out.close();
-
-        }catch (Exception e) {
-            System.out.println("Error: " + e);
-    }
-
-    }
 
     @Override
     public void updateStudentById(int id, Student student) {
+        Head head = headRepository.getHeadById(student.getHead_id());
         Student copy = getStudentById(id);
         copy.setId(student.getId());
         copy.setFirstName(student.getFirstName());
         copy.setLastName(student.getLastName());
+        copy.setHead_id(student.getHead_id());
         copy.setInstructionList(student.getInstructionList());
         try {
-            List<Student> students = new ArrayList<>(getAllStudent());
-
-            students.set(students.indexOf(getStudentById(id)), copy);
-
-            Gson gson = new Gson();
-            PrintWriter out = new PrintWriter(new FileWriter(StudentController.filepath));
-            out.write(gson.toJson(students));
-            out.close();
+            List<Student> students = new ArrayList<>(head.getStudentList());
+            for (int i = 0 ; i < students.size(); i++){
+                if (students.get(i).getId() == id){
+                    students.remove(i);
+                    students.add(i, copy);
+                }
+            }
+            if(headRepository.getHeadById(head.getId()) != null ) {
+                head.setStudentList(students);
+                headRepository.updateHeadById(head.getId(), head);
+            }
         } catch (Exception e) {
             System.out.println("Error " + e);
         }
@@ -87,17 +79,17 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public void deleteStudentById(int id) {
-        Gson gson = new Gson();
         try {
-            List<Student> students = new ArrayList<>(getAllStudent());
+            Student student = getStudentById(id);
+            Head head = headRepository.getHeadById(student.getHead_id());
+            List<Student> students = new ArrayList<>(head.getStudentList());
 
             for(int i = 0; i < students.size(); i++)
                 if(students.get(i).getId() == id)
                     students.remove(i);
 
-            PrintWriter out = new PrintWriter(new FileWriter(StudentController.filepath));
-            out.write(gson.toJson(students));
-            out.close();
+            head.setStudentList(students);
+            headRepository.updateHeadById(head.getId(), head);
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
@@ -106,21 +98,16 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public void saveStudent(Student student) {
         try {
-            if(StudentController.filepath == null){
-                File file = new File( "local.json");
-
-                PrintWriter writer = new PrintWriter(file);
-                writer.write("[]");
-                writer.close();
-                StudentController.filepath = file.getPath();
-            }
-            Gson gson = new Gson();
-            List<Student> students = new ArrayList<>(getAllStudent());
-            if(getStudentById(student.getId()) == null){
+            Head head = headRepository.getHeadById(student.getHead_id());
+            List<Student> students = new ArrayList<>();
+            if(head.getStudentList() != null)
+                students = new ArrayList<>(head.getStudentList());
+            if(getStudentById(student.getId()) == null &&
+                    headRepository.getHeadById(head.getId()) != null ) {
+                student.setInstructionList(new ArrayList<>());
                 students.add(student);
-                PrintWriter out = new PrintWriter(new FileWriter(StudentController.filepath));
-                out.write(gson.toJson(students));
-                out.close();
+                head.setStudentList(students);
+                headRepository.updateHeadById(head.getId(), head);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -129,9 +116,8 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public Student getStudentById(int id) {
-        Gson gson = new Gson();
-        try (FileReader reader = new FileReader(StudentController.filepath)) {
-            List<Student> students = gson.fromJson(reader, new TypeToken<List<Student>>() {}.getType());
+        try {
+            List<Student> students = new ArrayList<>(getAllStudent());
             for (Student student : students) {
                 if (student.getId() == id) {
                     return student;

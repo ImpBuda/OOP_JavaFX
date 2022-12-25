@@ -22,6 +22,4 @@ public interface InstructionService {
 
     Instruction getInstructionById(int id);
 
-    void saveFileSystem(File saveFile);
-
 }

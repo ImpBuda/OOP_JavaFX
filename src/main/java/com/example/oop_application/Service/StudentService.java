@@ -21,5 +21,4 @@ public interface StudentService {
 
  void deleteStudentById(int id);
 
- void saveFileSystem(File saveFile);
 }

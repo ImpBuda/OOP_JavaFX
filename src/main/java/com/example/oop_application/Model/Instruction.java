@@ -14,4 +14,6 @@ public class Instruction {
     private LocalDate dateOfIndication;
 
     private Integer daysToComplete;
+
+    private Integer student_id;
 }

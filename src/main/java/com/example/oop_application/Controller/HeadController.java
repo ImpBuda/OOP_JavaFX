@@ -1,5 +1,6 @@
 package com.example.oop_application.Controller;
 
+import com.example.oop_application.Model.Context;
 import com.example.oop_application.Model.Head;
 import com.example.oop_application.Service.HeadService;
 import com.example.oop_application.Service.Impl.HeadServiceImpl;
@@ -18,15 +19,20 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HeadController {
     private final HeadService headService = new HeadServiceImpl();
 
-    static public String filepath;
-
     @FXML
     public Button btnSave;
+
+    @FXML
+    public Button studentmodel;
+
+    @FXML
+    public Button instructionmodel;
 
     @FXML
     private TextField findInput;
@@ -76,9 +82,6 @@ public class HeadController {
     private Button btnOpen;
 
     @FXML
-    private Button back;
-
-    @FXML
     private TableView<Head> table;
 
     @FXML
@@ -96,8 +99,6 @@ public class HeadController {
     @FXML
     void initialize(){
 
-        back.setOnAction(actionEvent -> backToMenu());
-
         btnSave.setOnAction(actionEvent -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
@@ -107,12 +108,18 @@ public class HeadController {
             }
         });
 
+        studentmodel.setOnAction(actionEvent -> {
+                loadStudentWindow();
+        });
+
+        instructionmodel.setOnAction(actionEvent -> loadInstructionWindow());
+
         btnOpen.setOnAction(actionEvent -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
             File file = fileChooser.showOpenDialog(btnOpen.getScene().getWindow());
             if (file != null) {
-                filepath = file.getPath();
+                Context.filepath = file.getPath();
                 updateTable(headService.getAllHead());
             }
         });
@@ -187,12 +194,11 @@ public class HeadController {
                 modalWindow("Преподаватель с таким номером уже существует");
             }
             Head head = new Head();
-            int id = Integer.parseInt(idInput.getText());
-            head.setId(id);
+            head.setId(Integer.valueOf(idInput.getText()));
             head.setFirstName(nameInput.getText());
             head.setLastName(surnameInput.getText());
             head.setPatronymic(patronymicInput.getText());
-            head.setStudentList(headService.getHeadById(id).getStudentList());
+            head.setStudentList(new ArrayList<>());
             headService.saveHead(head);
             updateTable(headService.getAllHead());
         }
@@ -250,20 +256,35 @@ public class HeadController {
         surnameInput.setText(table.getSelectionModel().getSelectedItem().getLastName());
     }
 
-    private void backToMenu(){
-            back.getScene().getWindow().hide();
+    private void loadStudentWindow(){
+        FXMLLoader loader = new FXMLLoader(HeadController.class.getResource("/com/example/oop_application/student.fxml"));
 
-            FXMLLoader loader = new FXMLLoader(HeadController.class.getResource("/com/example/oop_application/menu.fxml"));
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        Parent root = loader.getRoot();
+        /*context.setStudentController(loader.getController());*/
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+    private void loadInstructionWindow(){
+        FXMLLoader loader = new FXMLLoader(HeadController.class.getResource("/com/example/oop_application/instruction.fxml"));
+
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Parent root = loader.getRoot();
+        /*context.setInstructionController(loader.getController());*/
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

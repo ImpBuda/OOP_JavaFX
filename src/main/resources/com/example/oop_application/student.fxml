@@ -15,13 +15,14 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="911.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.StudentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="656.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.StudentController">
    <children>
-      <TableView fx:id="table" layoutX="14.0" layoutY="160.0" prefHeight="387.0" prefWidth="287.0">
+      <TableView fx:id="table" layoutX="14.0" layoutY="160.0" prefHeight="387.0" prefWidth="427.0">
         <columns>
-          <TableColumn fx:id="id" prefWidth="99.0" text="Номер зачетки" />
+          <TableColumn fx:id="id" prefWidth="99.0" text="Номер студента" />
           <TableColumn fx:id="firstName" prefWidth="90.0" text="Имя" />
-            <TableColumn fx:id="lastName" prefWidth="98.0" text="Фамилия" />
+          <TableColumn fx:id="lastName" prefWidth="98.0" text="Фамилия" />
+          <TableColumn fx:id="headId" prefWidth="140" text="Номер преподавателя" />
         </columns>
       </TableView>
       <Label layoutX="357.0" layoutY="14.0" prefHeight="58.0" prefWidth="178.0" text="Студенты">
@@ -58,6 +59,7 @@
             <TextField fx:id="idInput" layoutX="13.0" layoutY="14.0" promptText="Номер" />
             <TextField fx:id="nameInput" layoutX="13.0" layoutY="49.0" promptText="Имя" />
             <TextField fx:id="surnameInput" layoutX="13.0" layoutY="84.0" promptText="Фамилия" />
+            <TextField fx:id="headIdInput" layoutX="13.0" layoutY="120.0" promptText="Номер преподавателя" />
             <Button fx:id="submit" layoutX="13.0" layoutY="158.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Принять" />
             <Button fx:id="cancel" layoutX="13.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Отмена" />
          </children>
@@ -77,8 +79,5 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Button fx:id="btnOpen" layoutX="758.0" layoutY="505.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="открыть" />
-      <Button fx:id="btnSave" layoutX="758.0" layoutY="458.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Сохранить как" />
-      <Button fx:id="back" layoutX="777.0" layoutY="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Назад" />
    </children>
 </AnchorPane>
