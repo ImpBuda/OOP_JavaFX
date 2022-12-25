@@ -58,7 +58,6 @@ public class HeadRepositoryImpl implements HeadRepository {
 
     @Override
     public void deleteHeadById(int id) {
-        Gson gson = new Gson();
         try {
             List<Head> heads = new ArrayList<>(getAllHead());
 
