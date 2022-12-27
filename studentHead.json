@@ -1,0 +1,26 @@
+[
+  {
+    "student_id": 1,
+    "head_id": 1
+  },
+  {
+    "student_id": 2,
+    "head_id": 1
+  },
+  {
+    "student_id": 2,
+    "head_id": 2
+  },
+  {
+    "student_id": 1,
+    "head_id": 2
+  },
+  {
+    "student_id": 3,
+    "head_id": 3
+  },
+  {
+    "student_id": 5,
+    "head_id": 5
+  }
+]
