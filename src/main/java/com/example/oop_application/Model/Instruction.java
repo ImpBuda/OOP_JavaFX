@@ -15,5 +15,4 @@ public class Instruction {
 
     private Integer daysToComplete;
 
-    private Integer student_id;
 }

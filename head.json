@@ -1,54 +1,20 @@
 [
   {
-    "id": 5,
+    "id": 1,
     "firstName": "pr",
     "lastName": "pr",
-    "patronymic": "rv",
-    "studentList": [
-      {
-        "id": 556,
-        "firstName": "memo",
-        "lastName": "memo",
-        "head_id": 5,
-        "instructionList": []
-      },
-      {
-        "id": 557,
-        "firstName": "me",
-        "lastName": "memo",
-        "head_id": 5,
-        "instructionList": []
-      }
-    ]
+    "patronymic": "rv"
   },
   {
-    "id": 6,
-    "firstName": "gg",
-    "lastName": "gf",
-    "patronymic": "jj",
-    "studentList": [
-      {
-        "id": 566,
-        "firstName": "rac",
-        "lastName": "rack",
-        "head_id": 6,
-        "instructionList": [
-          {
-            "id": 5,
-            "content": "fdh",
-            "dateOfIndication": "2000-06-06",
-            "daysToComplete": 5,
-            "student_id": 566
-          },
-          {
-            "id": 6,
-            "content": "xcbxc",
-            "dateOfIndication": "2000-06-05",
-            "daysToComplete": 5,
-            "student_id": 566
-          }
-        ]
-      }
-    ]
+    "id": 2,
+    "firstName": "pr",
+    "lastName": "pr",
+    "patronymic": "rv"
+  },
+  {
+    "id": 3,
+    "firstName": "mou",
+    "lastName": "mou",
+    "patronymic": "mou"
   }
 ]

@@ -1,6 +1,7 @@
 package com.example.oop_application.Repository;
 
 import com.example.oop_application.Model.Head;
+import com.example.oop_application.Model.Head_Student;
 
 import java.io.File;
 import java.util.List;
@@ -19,7 +20,7 @@ public interface HeadRepository {
 
     void updateHeadById(int id, Head head);
 
-    void saveHead(Head head);
+    void saveHead(Head head, Head_Student head_student);
 
     Head getHeadById(int id);
 

@@ -16,6 +16,4 @@ public class Head {
 
     private String patronymic;
 
-    private List<Student> studentList;
-
 }

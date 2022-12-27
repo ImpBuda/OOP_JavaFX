@@ -1,13 +1,9 @@
 package com.example.oop_application.Controller;
 
-import com.example.oop_application.Model.Context;
-import com.example.oop_application.Model.Instruction;
-import com.example.oop_application.Model.Student;
+import com.example.oop_application.Model.*;
 import com.example.oop_application.Repository.HeadRepository;
-import com.example.oop_application.Service.HeadService;
-import com.example.oop_application.Service.Impl.HeadServiceImpl;
-import com.example.oop_application.Service.Impl.StudentServiceImpl;
-import com.example.oop_application.Service.StudentService;
+import com.example.oop_application.Repository.Impl.StudentRepositoryImpl;
+import com.example.oop_application.Repository.StudentRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -34,15 +30,10 @@ import java.util.List;
 public class StudentController {
 
 
-    private final StudentService studentService = new StudentServiceImpl();
-
-    private final HeadService headService = new HeadServiceImpl();
+    StudentRepository studentRepository = new StudentRepositoryImpl();
 
     @FXML
     public TextField headIdInput;
-
-    @FXML
-    public TableColumn<Student, Integer> headId;
 
     @FXML
     private ToggleGroup find;
@@ -75,6 +66,9 @@ public class StudentController {
     private TextField surnameInput;
 
     @FXML
+    private TextField instructionIdInput;
+
+    @FXML
     private Button btnAdd;
 
     @FXML
@@ -97,13 +91,13 @@ public class StudentController {
 
     @FXML
     void initialize(){
-        if (Context.filepath != null)
-            updateTable(studentService.getAllStudents());
+
+            updateTable(studentRepository.getAllStudent());
 
             btnDelete.setOnAction(actionEvent -> {
                 if(!table.getSelectionModel().isEmpty()) {
                     delete();
-                    updateTable(studentService.getAllStudents());
+                    updateTable(studentRepository.getAllStudent());
                 }
                 else {
                     modalWindow("Выберите строку, которую нужно удалить");
@@ -113,13 +107,15 @@ public class StudentController {
             cancel.setOnAction(action -> {
                     clearInput();
                     addPanel.setStyle("visibility: hidden;");
+                    idInput.setStyle("visibility: visible");
+                    headIdInput.setStyle("visibility: visible");
             });
 
             btnAdd.setOnAction(actionEvent -> {
                     addPanel.setStyle("visibility: visible;");
                     submit.setOnAction(action -> {
                         add();
-                        updateTable(studentService.getAllStudents());
+                        updateTable(studentRepository.getAllStudent());
                     });
             });
 
@@ -127,12 +123,16 @@ public class StudentController {
             btnUpdate.setOnAction(actionEvent -> {
                 if(!table.getSelectionModel().isEmpty()) {
                         addPanel.setStyle("visibility: visible;");
+                        idInput.setStyle("visibility: hidden");
+                        headIdInput.setStyle("visibility: hidden");
                         fillingInput();
 
                         submit.setOnAction(action -> {
                             update();
-                            updateTable(studentService.getAllStudents());
+                            updateTable(studentRepository.getAllStudent());
                             addPanel.setStyle("visibility: hidden;");
+                            idInput.setStyle("visibility: visible");
+                            headIdInput.setStyle("visibility: visible");
                             clearInput();
                         });
                 }
@@ -143,8 +143,8 @@ public class StudentController {
 
 
         findInput.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (nameRadio.isSelected()) updateTable(studentService.nameSearch(newValue));
-            else if (surnameRadio.isSelected()) updateTable(studentService.surnameSearch(newValue));
+            if (nameRadio.isSelected()) updateTable(studentRepository.nameSearch(newValue));
+            else if (surnameRadio.isSelected()) updateTable(studentRepository.surnameSearch(newValue));
         });
     }
 
@@ -155,9 +155,7 @@ public class StudentController {
             student.setId(Integer.valueOf(idInput.getText()));
             student.setFirstName(nameInput.getText());
             student.setLastName(surnameInput.getText());
-            student.setHead_id(Integer.valueOf(headIdInput.getText()));
-            student.setInstructionList(studentService.getStudentById(id).getInstructionList());
-            studentService.updateStudentById(id, student);
+            studentRepository.updateStudentById(id, student);
         }
         catch (Exception e){
             modalWindow("Неправильно введены данные");
@@ -167,16 +165,21 @@ public class StudentController {
     private void add() {
 
         try {
-            if(headService.getHeadById(Integer.parseInt(headIdInput.getText())) == null)
-                modalWindow("Преподаватель с таким номером не существует");
-            if(studentService.getStudentById(Integer.parseInt(idInput.getText())) != null)
+            if(studentRepository.getStudentById(Integer.parseInt(idInput.getText())) != null)
                 modalWindow("Студент с таким уже существует");
             Student student = new Student();
             student.setId(Integer.valueOf(idInput.getText()));
             student.setFirstName(nameInput.getText());
             student.setLastName(surnameInput.getText());
-            student.setHead_id(Integer.valueOf(headIdInput.getText()));
-            studentService.createStudent(student);
+
+            Student_Instruction student_instruction = new Student_Instruction();
+            student_instruction.setStudent_id(student.getId());
+            student_instruction.setInstruction_id(Integer.valueOf(instructionIdInput.getText()));
+
+            Head_Student head_student = new Head_Student();
+            head_student.setStudent_id(student.getId());
+            head_student.setHead_id(Integer.valueOf(headIdInput.getText()));
+            studentRepository.saveStudent(student, head_student, student_instruction);
         }
         catch (Exception e) {
             modalWindow("Неправильно введены данные");
@@ -211,12 +214,11 @@ public class StudentController {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        headId.setCellValueFactory(new PropertyValueFactory<>("head_id"));
         table.setItems(students);
     }
 
     private void delete(){
-        studentService.deleteStudentById(table.getSelectionModel().getSelectedItem().getId());
+        studentRepository.deleteStudentById(table.getSelectionModel().getSelectedItem().getId());
     }
 
     private void clearInput(){
@@ -230,7 +232,6 @@ public class StudentController {
         idInput.setText(table.getSelectionModel().getSelectedItem().getId().toString());
         nameInput.setText(table.getSelectionModel().getSelectedItem().getFirstName());
         surnameInput.setText(table.getSelectionModel().getSelectedItem().getLastName());
-        headIdInput.setText(table.getSelectionModel().getSelectedItem().getHead_id().toString());
     }
 
 }

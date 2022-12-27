@@ -8,11 +8,14 @@ import lombok.Data;
 @Data
 public class Context {
 
-   public static String filepath;
+   public static String headFilePath = "head.json";
 
-   private StudentController studentController;
+   public static String studentFilePath = "student.json";
 
-   private InstructionController instructionController;
+   public static String instructionFilePath = "instruction.json";
 
-   private HeadController headController;
+   public static String headStudentFilepath = "studentHead.json";
+
+   public static String studentInstructionFilePath = "studentInstruction.json";
+
 }

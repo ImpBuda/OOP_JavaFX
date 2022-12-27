@@ -2,8 +2,9 @@ package com.example.oop_application.Controller;
 
 import com.example.oop_application.Model.Context;
 import com.example.oop_application.Model.Head;
-import com.example.oop_application.Service.HeadService;
-import com.example.oop_application.Service.Impl.HeadServiceImpl;
+import com.example.oop_application.Model.Head_Student;
+import com.example.oop_application.Repository.HeadRepository;
+import com.example.oop_application.Repository.Impl.HeadRepositoryImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,7 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HeadController {
-    private final HeadService headService = new HeadServiceImpl();
+
+    HeadRepository headRepository = new HeadRepositoryImpl();
 
     @FXML
     public Button btnSave;
@@ -36,7 +38,6 @@ public class HeadController {
 
     @FXML
     private TextField findInput;
-
 
     @FXML
     private RadioMenuItem nameRadio;
@@ -56,6 +57,8 @@ public class HeadController {
     @FXML
     private TextField idInput;
 
+    @FXML
+    public TextField idStudentInput;
 
     @FXML
     private TextField nameInput;
@@ -99,18 +102,18 @@ public class HeadController {
     @FXML
     void initialize(){
 
+        updateTable(headRepository.getAllHead());
+
         btnSave.setOnAction(actionEvent -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
             File file = fileChooser.showSaveDialog(btnSave.getScene().getWindow());
             if(file != null) {
-                headService.saveFileSystem(file);
+                headRepository.saveFileSystem(file);
             }
         });
 
-        studentmodel.setOnAction(actionEvent -> {
-                loadStudentWindow();
-        });
+        studentmodel.setOnAction(actionEvent -> loadStudentWindow());
 
         instructionmodel.setOnAction(actionEvent -> loadInstructionWindow());
 
@@ -119,15 +122,14 @@ public class HeadController {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
             File file = fileChooser.showOpenDialog(btnOpen.getScene().getWindow());
             if (file != null) {
-                Context.filepath = file.getPath();
-                updateTable(headService.getAllHead());
+                updateTable(headRepository.getAllHead());
             }
         });
 
         btnDelete.setOnAction(actionEvent -> {
             if(!table.getSelectionModel().isEmpty()) {
                 delete();
-                updateTable(headService.getAllHead());
+                updateTable(headRepository.getAllHead());
             }
             else {
                 modalWindow("Выберите строку, которую нужно удалить");
@@ -137,6 +139,8 @@ public class HeadController {
         cancel.setOnAction(action -> {
             clearInput();
             addPanel.setStyle("visibility: hidden;");
+            idInput.setStyle("visibility: visible;");
+            idStudentInput.setStyle("visibility: visible;");
         });
 
         btnAdd.setOnAction(actionEvent -> {
@@ -149,12 +153,16 @@ public class HeadController {
         btnUpdate.setOnAction(actionEvent -> {
             if(!table.getSelectionModel().isEmpty()) {
                 addPanel.setStyle("visibility: visible;");
+                idInput.setStyle("visibility: hidden;");
+                idStudentInput.setStyle("visibility: hidden");
                 fillingInput();
 
                 submit.setOnAction(action -> {
                     update();
-                    updateTable(headService.getAllHead());
+                    updateTable(headRepository.getAllHead());
                     addPanel.setStyle("visibility: hidden;");
+                    idInput.setStyle("visibility: visible;");
+                    idStudentInput.setStyle("visibility: visible;");
                     clearInput();
                 });
             }
@@ -165,9 +173,9 @@ public class HeadController {
 
 
         findInput.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (nameRadio.isSelected()) updateTable(headService.nameSearch(newValue));
-            else if (surnameRadio.isSelected()) updateTable(headService.surnameSearch(newValue));
-            else if (patronymicRadio.isSelected()) updateTable(headService.patronymicSearch(newValue));
+            if (nameRadio.isSelected()) updateTable(headRepository.nameSearch(newValue));
+            else if (surnameRadio.isSelected()) updateTable(headRepository.surnameSearch(newValue));
+            else if (patronymicRadio.isSelected()) updateTable(headRepository.patronymicSearch(newValue));
         });
     }
 
@@ -179,8 +187,7 @@ public class HeadController {
             head.setFirstName(nameInput.getText());
             head.setLastName(surnameInput.getText());
             head.setPatronymic(patronymicInput.getText());
-            head.setStudentList(headService.getHeadById(id).getStudentList());
-            headService.updateHeadById(id, head);
+            headRepository.updateHeadById(id, head);
         }
         catch (Exception e){
             modalWindow("Неправильно введены данные");
@@ -190,7 +197,7 @@ public class HeadController {
     private void add() {
 
         try {
-            if(headService.getHeadById(Integer.parseInt(idInput.getText())) != null){
+            if(headRepository.getHeadById(Integer.parseInt(idInput.getText())) != null){
                 modalWindow("Преподаватель с таким номером уже существует");
             }
             Head head = new Head();
@@ -198,9 +205,13 @@ public class HeadController {
             head.setFirstName(nameInput.getText());
             head.setLastName(surnameInput.getText());
             head.setPatronymic(patronymicInput.getText());
-            head.setStudentList(new ArrayList<>());
-            headService.saveHead(head);
-            updateTable(headService.getAllHead());
+
+            Head_Student head_student = new Head_Student();
+            head_student.setStudent_id(Integer.valueOf(idStudentInput.getText()));
+            head_student.setHead_id(head.getId());
+
+            headRepository.saveHead(head, head_student);
+            updateTable(headRepository.getAllHead());
         }
         catch (Exception e) {
             modalWindow("Неправильно введены данные");
@@ -241,13 +252,14 @@ public class HeadController {
     }
 
     private void delete(){
-        headService.deleteHeadById(table.getSelectionModel().getSelectedItem().getId());
+        headRepository.deleteHeadById(table.getSelectionModel().getSelectedItem().getId());
     }
 
     private void clearInput(){
         idInput.setText("");
         nameInput.setText("");
         surnameInput.setText("");
+        idStudentInput.setText("");
     }
 
     private void fillingInput(){
@@ -287,4 +299,5 @@ public class HeadController {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
 }
