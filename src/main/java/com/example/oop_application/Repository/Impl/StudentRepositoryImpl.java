@@ -61,6 +61,9 @@ public class StudentRepositoryImpl implements StudentRepository {
                     break;
                 }
             }
+            PrintWriter out = new PrintWriter(new FileWriter(Context.studentFilePath));
+            out.write(gson.toJson(students));
+            out.close();
         } catch (Exception e) {
             System.out.println("Error " + e);
         }

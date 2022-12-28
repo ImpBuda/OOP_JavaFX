@@ -101,7 +101,7 @@ public class InstructionController {
 
     @FXML
     void initialize(){
-
+        if(instructionRepository.getAllInstruction() != null)
             updateTable(instructionRepository.getAllInstruction());
 
         btnDelete.setOnAction(actionEvent -> {

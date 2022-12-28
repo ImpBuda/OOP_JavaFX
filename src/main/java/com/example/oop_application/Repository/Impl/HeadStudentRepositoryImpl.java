@@ -1,6 +1,7 @@
 package com.example.oop_application.Repository.Impl;
 
 import com.example.oop_application.Model.Context;
+import com.example.oop_application.Model.Head;
 import com.example.oop_application.Model.Head_Student;
 import com.example.oop_application.Model.LocalDateAdapter;
 import com.example.oop_application.Repository.HeadStudentRepository;
@@ -23,6 +24,20 @@ public class HeadStudentRepositoryImpl implements HeadStudentRepository {
     private final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+
+    @Override
+    public List<Head_Student> searchStud(String str) {
+        List<Head_Student> head_students = new ArrayList<>(getAll());
+        head_students.removeIf(element -> !element.getStudent_id().toString().startsWith(str));
+        return head_students;
+    }
+
+    @Override
+    public List<Head_Student> searchHead(String str) {
+        List<Head_Student> head_students = new ArrayList<>(getAll());
+        head_students.removeIf(element -> !element.getHead_id().toString().startsWith(str));
+        return head_students;
+    }
 
     @Override
     public List<Head_Student> getAll() {
@@ -101,7 +116,45 @@ public class HeadStudentRepositoryImpl implements HeadStudentRepository {
         }
     }
 
+    @Override
+    public void delete(int studId, int headId) {
+        try {
+            List<Head_Student> head_students = new ArrayList<>(getAll());
+            head_students.removeIf(head_student -> head_student.getStudent_id() == studId && head_student.getHead_id() == headId);
 
+            PrintWriter out = new PrintWriter(new FileWriter(Context.headStudentFilepath));
+            out.write(gson.toJson(head_students));
+            out.close();
+
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+    }
+
+    @Override
+    public void update(int studId, int headId) {
+        Head_Student copy = new Head_Student();
+        copy.setHead_id(headId);
+        copy.setStudent_id(studId);
+        List<Head_Student> head_students = new ArrayList<>(getAll());
+        try {
+            for (int i = 0 ; i < head_students.size(); i++){
+                if (head_students.get(i).getHead_id() == headId && head_students.get(i).getStudent_id() == studId){
+                    head_students.remove(i);
+                    head_students.add(i, copy);
+                    break;
+                }
+            }
+
+            PrintWriter out = new PrintWriter(new FileWriter(Context.headStudentFilepath));
+            out.write(gson.toJson(head_students));
+            out.close();
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+    }
 
     @Override
     public void deleteByStudentId(int id) {

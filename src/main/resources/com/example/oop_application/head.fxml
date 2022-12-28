@@ -85,5 +85,7 @@
       <Button fx:id="btnSave" layoutX="758.0" layoutY="458.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Сохранить как" />
       <Button fx:id="studentmodel" layoutX="736.0" layoutY="30.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="142.0" text="Перейти к студентам" />
       <Button fx:id="instructionmodel" layoutX="737.0" layoutY="73.0" mnemonicParsing="false" text="Перейти к поручениям" />
+      <Button fx:id="dependHead" layoutX="717.0" layoutY="183.0" mnemonicParsing="false" text="Связи студент-преподаватель" />
+      <Button fx:id="dependInstruction" layoutX="717.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="181.0" text="Связи студент-поручение" />
    </children>
 </AnchorPane>

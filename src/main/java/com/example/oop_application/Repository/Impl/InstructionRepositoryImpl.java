@@ -95,6 +95,9 @@ public class InstructionRepositoryImpl implements InstructionRepository {
                     break;
                 }
             }
+            PrintWriter out = new PrintWriter(new FileWriter(Context.instructionFilePath));
+            out.write(gson.toJson(instructions));
+            out.close();
         } catch (Exception e) {
             System.out.println("Error " + e);
         }

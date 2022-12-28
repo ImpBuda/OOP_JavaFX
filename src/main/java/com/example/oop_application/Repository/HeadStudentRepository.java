@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface HeadStudentRepository {
 
+    List<Head_Student> searchStud(String str);
+
+    List<Head_Student> searchHead(String str);
+
     List<Head_Student> getAll();
 
     void deleteByStudentId(int id);
@@ -17,4 +21,8 @@ public interface HeadStudentRepository {
     boolean isPresentHead(int id, List<Head_Student> list);
 
     void save(Head_Student head_student);
+
+    void delete(int studId, int headId);
+
+    void update(int studId, int headId);
 }

@@ -91,7 +91,7 @@ public class StudentController {
 
     @FXML
     void initialize(){
-
+        if(studentRepository.getAllStudent() != null)
             updateTable(studentRepository.getAllStudent());
 
             btnDelete.setOnAction(actionEvent -> {
@@ -109,6 +109,7 @@ public class StudentController {
                     addPanel.setStyle("visibility: hidden;");
                     idInput.setStyle("visibility: visible");
                     headIdInput.setStyle("visibility: visible");
+                    instructionIdInput.setStyle("visibility: visible");
             });
 
             btnAdd.setOnAction(actionEvent -> {
@@ -125,6 +126,7 @@ public class StudentController {
                         addPanel.setStyle("visibility: visible;");
                         idInput.setStyle("visibility: hidden");
                         headIdInput.setStyle("visibility: hidden");
+                        instructionIdInput.setStyle("visibility: hidden");
                         fillingInput();
 
                         submit.setOnAction(action -> {
@@ -133,6 +135,7 @@ public class StudentController {
                             addPanel.setStyle("visibility: hidden;");
                             idInput.setStyle("visibility: visible");
                             headIdInput.setStyle("visibility: visible");
+                            instructionIdInput.setStyle("visibility: visible");
                             clearInput();
                         });
                 }

@@ -100,6 +100,12 @@ public class HeadController {
     private TableColumn<Head, String> lastName;
 
     @FXML
+    private Button dependHead;
+
+    @FXML
+    private Button dependInstruction;
+
+    @FXML
     void initialize(){
 
         updateTable(headRepository.getAllHead());
@@ -113,9 +119,11 @@ public class HeadController {
             }
         });
 
-        studentmodel.setOnAction(actionEvent -> loadStudentWindow());
+        dependHead.setOnAction(actionEvent -> loadWindow("/com/example/oop_application/studhead.fxml"));
 
-        instructionmodel.setOnAction(actionEvent -> loadInstructionWindow());
+        studentmodel.setOnAction(actionEvent -> loadWindow("/com/example/oop_application/student.fxml"));
+
+        instructionmodel.setOnAction(actionEvent -> loadWindow("/com/example/oop_application/instruction.fxml"));
 
         btnOpen.setOnAction(actionEvent -> {
             FileChooser fileChooser = new FileChooser();
@@ -268,24 +276,8 @@ public class HeadController {
         surnameInput.setText(table.getSelectionModel().getSelectedItem().getLastName());
     }
 
-    private void loadStudentWindow(){
-        FXMLLoader loader = new FXMLLoader(HeadController.class.getResource("/com/example/oop_application/student.fxml"));
-
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Parent root = loader.getRoot();
-        /*context.setStudentController(loader.getController());*/
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-
-    private void loadInstructionWindow(){
-        FXMLLoader loader = new FXMLLoader(HeadController.class.getResource("/com/example/oop_application/instruction.fxml"));
+    private void loadWindow(String str){
+        FXMLLoader loader = new FXMLLoader(HeadController.class.getResource(str));
 
         try {
             loader.load();
