@@ -48,6 +48,8 @@ public class InstructionRepositoryImpl implements InstructionRepository {
 
             Type instructionListType = new TypeToken<List<Instruction>>(){}.getType();
             List<Instruction> instructions = gson.fromJson(reader, instructionListType);
+            if(instructions == null)
+                return new ArrayList<>();
             return instructions;
         }
         catch (Exception e){
@@ -135,5 +137,4 @@ public class InstructionRepositoryImpl implements InstructionRepository {
         }
         return null;
     }
-
 }

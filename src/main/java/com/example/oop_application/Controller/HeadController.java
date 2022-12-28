@@ -274,6 +274,7 @@ public class HeadController {
         idInput.setText(table.getSelectionModel().getSelectedItem().getId().toString());
         nameInput.setText(table.getSelectionModel().getSelectedItem().getFirstName());
         surnameInput.setText(table.getSelectionModel().getSelectedItem().getLastName());
+        patronymicInput.setText(table.getSelectionModel().getSelectedItem().getPatronymic());
     }
 
     private void loadWindow(String str){
@@ -284,12 +285,9 @@ public class HeadController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         Parent root = loader.getRoot();
-        /*context.setInstructionController(loader.getController());*/
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
     }
-
 }

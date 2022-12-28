@@ -30,9 +30,6 @@ public class InstructionController {
     InstructionRepository instructionRepository = new InstructionRepositoryImpl();
 
     @FXML
-    public TableColumn<Instruction, Integer> studentId;
-
-    @FXML
     public TextField studentIdInput;
 
     @FXML
@@ -46,12 +43,6 @@ public class InstructionController {
 
     @FXML
     private Button btnDelete;
-
-    @FXML
-    private Button btnOpen;
-
-    @FXML
-    private Button btnSave;
 
     @FXML
     private Button btnUpdate;

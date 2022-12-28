@@ -8,11 +8,7 @@ import java.time.LocalDate;
 public class Instruction {
 
     private Integer id;
-
     private String content;
-
     private LocalDate dateOfIndication;
-
     private Integer daysToComplete;
-
 }

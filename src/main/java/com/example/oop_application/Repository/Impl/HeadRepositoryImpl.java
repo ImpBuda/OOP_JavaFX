@@ -53,6 +53,8 @@ public class HeadRepositoryImpl implements HeadRepository {
 
             Type headListType = new TypeToken<List<Head>>(){}.getType();
             List<Head> headList = gson.fromJson(reader, headListType);
+            if (headList == null)
+                return new ArrayList<>();
             return headList;
         }
         catch (Exception e){

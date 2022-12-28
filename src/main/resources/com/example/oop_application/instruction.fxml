@@ -17,13 +17,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="752.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.InstructionController">
    <children>
-      <TableView fx:id="table" layoutX="11.0" layoutY="160.0" prefHeight="387.0" prefWidth="552.0">
+      <TableView fx:id="table" layoutX="11.0" layoutY="160.0" prefHeight="387.0" prefWidth="418.0">
         <columns>
           <TableColumn fx:id="id" prefWidth="75.0" text="Номер" />
           <TableColumn fx:id="instruction" prefWidth="93.0" text="Поручение" />
             <TableColumn fx:id="dateOfIndication" prefWidth="117.0" text="Дата поручения" />
             <TableColumn fx:id="daysToComplete" prefWidth="133.0" text="Дней на выполнение" />
-            <TableColumn fx:id="studentId" prefWidth="133.0" text="Номер студента" />
         </columns>
       </TableView>
       <Label layoutX="333.0" layoutY="14.0" prefHeight="58.0" prefWidth="218.0" text="Поручения">

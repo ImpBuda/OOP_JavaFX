@@ -76,6 +76,8 @@ public class StudentRepositoryImpl implements StudentRepository {
 
             Type studentListType = new TypeToken<List<Student>>(){}.getType();
             List<Student> studentList = gson.fromJson(reader, studentListType);
+            if (studentList == null)
+                return new ArrayList<>();
             return studentList;
         }
         catch (Exception e){

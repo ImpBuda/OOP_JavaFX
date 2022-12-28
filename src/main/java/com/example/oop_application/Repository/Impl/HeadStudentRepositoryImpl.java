@@ -46,6 +46,8 @@ public class HeadStudentRepositoryImpl implements HeadStudentRepository {
 
             Type headStudentListType = new TypeToken<List<Head_Student>>(){}.getType();
             List<Head_Student> headStudentList = gson.fromJson(reader, headStudentListType);
+                if(headStudentList == null)
+                    return new ArrayList<>();
             return headStudentList;
         }
         catch (Exception e){

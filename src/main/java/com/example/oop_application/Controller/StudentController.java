@@ -236,5 +236,4 @@ public class StudentController {
         nameInput.setText(table.getSelectionModel().getSelectedItem().getFirstName());
         surnameInput.setText(table.getSelectionModel().getSelectedItem().getLastName());
     }
-
 }

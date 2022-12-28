@@ -8,9 +8,6 @@ import java.util.List;
 public class Student {
 
     private Integer id;
-
     private String firstName;
-
     private String lastName;
-
 }

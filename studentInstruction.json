@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "student_id": 3,
+    "instruction_id": 1
+  },
+  {
+    "student_id": 3,
+    "instruction_id": 2
+  }
+]

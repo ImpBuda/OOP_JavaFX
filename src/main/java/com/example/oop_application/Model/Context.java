@@ -9,13 +9,8 @@ import lombok.Data;
 public class Context {
 
    public static String headFilePath = "head.json";
-
    public static String studentFilePath = "student.json";
-
    public static String instructionFilePath = "instruction.json";
-
    public static String headStudentFilepath = "studentHead.json";
-
    public static String studentInstructionFilePath = "studentInstruction.json";
-
 }

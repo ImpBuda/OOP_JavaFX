@@ -32,6 +32,8 @@ public class StudentInstructionRepositoryImpl implements StudentInstructionRepos
 
             Type student_instruction = new TypeToken<List<Student_Instruction>>(){}.getType();
             List<Student_Instruction> student_instructions = gson.fromJson(reader, student_instruction);
+            if (student_instructions == null)
+                return new ArrayList<>();
             return student_instructions;
         }
         catch (Exception e){
