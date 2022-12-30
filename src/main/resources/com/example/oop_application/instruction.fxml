@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="752.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.InstructionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="900.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.InstructionController">
    <children>
       <TableView fx:id="table" layoutX="11.0" layoutY="160.0" prefHeight="387.0" prefWidth="418.0">
         <columns>
@@ -54,7 +54,7 @@
       <Button fx:id="btnDelete" layoutX="384.0" layoutY="113.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="143.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Удалить " textFill="#689dff" />
       <Button fx:id="btnUpdate" layoutX="215.0" layoutY="113.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="143.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Редактировать " textFill="#689dff" />
       <Button fx:id="btnAdd" layoutX="33.0" layoutY="113.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="143.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Добавить" textFill="#689dff" />
-      <AnchorPane fx:id="addPanel" layoutX="570.0" layoutY="221.0" prefHeight="325.0" prefWidth="178.0" style="-fx-background-color: white; visibility: hidden;">
+      <AnchorPane fx:id="addPanel" layoutX="442.0" layoutY="221.0" prefHeight="325.0" prefWidth="178.0" style="-fx-background-color: white; visibility: hidden;">
          <children>
             <TextField fx:id="idInput" layoutX="13.0" layoutY="14.0" promptText="Номер" />
             <TextField fx:id="instructionInput" layoutX="13.0" layoutY="49.0" promptText="Поручение" />
@@ -80,5 +80,11 @@
           </Menu>
         </menus>
       </MenuBar>
+      <TableView fx:id="tableStud" layoutX="648.0" layoutY="221.0" prefHeight="305.0" prefWidth="200.0" style="visibility: hidden;">
+        <columns>
+          <TableColumn fx:id="idStud" prefWidth="100.0" text="Номер Студента" />
+          <TableColumn fx:id="surnameStud" prefWidth="99.0" text="Фамилия " />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

@@ -2,7 +2,10 @@ package com.example.oop_application.Controller;
 
 import com.example.oop_application.Model.*;
 import com.example.oop_application.Repository.HeadRepository;
+import com.example.oop_application.Repository.Impl.HeadRepositoryImpl;
+import com.example.oop_application.Repository.Impl.InstructionRepositoryImpl;
 import com.example.oop_application.Repository.Impl.StudentRepositoryImpl;
+import com.example.oop_application.Repository.InstructionRepository;
 import com.example.oop_application.Repository.StudentRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +34,23 @@ public class StudentController {
 
 
     StudentRepository studentRepository = new StudentRepositoryImpl();
+
+    HeadRepository headRepository = new HeadRepositoryImpl();
+
+    InstructionRepository instructionRepository = new InstructionRepositoryImpl();
+
+    @FXML
+    public TableView<Head> tableHead;
+    @FXML
+    public TableColumn<Head, Integer> idHead;
+    @FXML
+    public TableColumn<Head, String> surnameHead;
+    @FXML
+    public TableView<Instruction> tableInstruction;
+    @FXML
+    public TableColumn<Instruction, Integer> idInstruct;
+    @FXML
+    public TableColumn<Instruction, String> contentInst;
 
     @FXML
     public TextField headIdInput;
@@ -110,13 +130,20 @@ public class StudentController {
                     idInput.setStyle("visibility: visible");
                     headIdInput.setStyle("visibility: visible");
                     instructionIdInput.setStyle("visibility: visible");
+                    tableHead.setStyle("visibility: hidden;");
+                    tableInstruction.setStyle("visibility: hidden;");
             });
 
             btnAdd.setOnAction(actionEvent -> {
                     addPanel.setStyle("visibility: visible;");
+                    updateHeadAndInstTable(headRepository.getAllHead(), instructionRepository.getAllInstruction());
+                    tableHead.setStyle("visibility: visible;");
+                    tableInstruction.setStyle("visibility: visible;");
                     submit.setOnAction(action -> {
                         add();
                         updateTable(studentRepository.getAllStudent());
+                        tableHead.setStyle("visibility: hidden;");
+                        tableInstruction.setStyle("visibility: hidden;");
                     });
             });
 
@@ -209,6 +236,23 @@ public class StudentController {
         stage.showAndWait();
     }
 
+    private void updateHeadAndInstTable(List<Head> headList, List<Instruction> instructionList){
+        try {
+            ObservableList<Head> heads = FXCollections.observableArrayList(headList);
+            ObservableList<Instruction> instructions = FXCollections.observableArrayList(instructionList);
+
+            idHead.setCellValueFactory(new PropertyValueFactory<>("id"));
+            surnameHead.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+            idInstruct.setCellValueFactory(new PropertyValueFactory<>("id"));
+            contentInst.setCellValueFactory(new PropertyValueFactory<>("content"));
+
+            tableHead.setItems(heads);
+            tableInstruction.setItems(instructions);
+        }
+        catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+    }
 
     private void updateTable(List<Student> list){
 

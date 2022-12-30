@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="911.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.HeadController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="1096.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.HeadController">
    <children>
       <TableView fx:id="table" layoutX="14.0" layoutY="166.0" prefHeight="387.0" prefWidth="414.0">
         <columns>
@@ -81,11 +81,15 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Button fx:id="btnOpen" layoutX="758.0" layoutY="505.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="открыть" />
-      <Button fx:id="btnSave" layoutX="758.0" layoutY="458.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Сохранить как" />
-      <Button fx:id="studentmodel" layoutX="736.0" layoutY="30.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="142.0" text="Перейти к студентам" />
-      <Button fx:id="instructionmodel" layoutX="737.0" layoutY="73.0" mnemonicParsing="false" text="Перейти к поручениям" />
-      <Button fx:id="dependHead" layoutX="717.0" layoutY="183.0" mnemonicParsing="false" text="Связи студент-преподаватель" />
-      <Button fx:id="dependInstruction" layoutX="717.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="181.0" text="Связи студент-поручение" />
+      <Button fx:id="btnOpen" layoutX="939.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="открыть" />
+      <Button fx:id="btnSave" layoutX="939.0" layoutY="452.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Сохранить как" />
+      <Button fx:id="studentmodel" layoutX="918.0" layoutY="30.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="142.0" text="Перейти к студентам" />
+      <Button fx:id="instructionmodel" layoutX="917.0" layoutY="73.0" mnemonicParsing="false" text="Перейти к поручениям" />
+      <TableView fx:id="tableStud" layoutX="658.0" layoutY="142.0" prefHeight="256.0" prefWidth="198.0" style="visibility: hidden;">
+        <columns>
+          <TableColumn fx:id="idStud" prefWidth="101.0" text="Номер студента" />
+          <TableColumn fx:id="surnameStud" prefWidth="95.0" text="Фамилия" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

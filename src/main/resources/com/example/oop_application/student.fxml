@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="656.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.StudentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="1079.0" style="-fx-background-color: #301B28;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop_application.Controller.StudentController">
    <children>
       <TableView fx:id="table" layoutX="14.0" layoutY="160.0" prefHeight="387.0" prefWidth="289.0">
         <columns>
@@ -79,5 +79,17 @@
           </Menu>
         </menus>
       </MenuBar>
+      <TableView fx:id="tableHead" layoutX="526.0" layoutY="160.0" prefHeight="187.0" prefWidth="277.0" style="visibility: hidden;">
+        <columns>
+          <TableColumn fx:id="idHead" prefWidth="148.0" text="Номер преподавателя" />
+          <TableColumn fx:id="surnameHead" prefWidth="128.0" text="Фамилия" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tableInstruction" layoutX="526.0" layoutY="360.0" prefHeight="193.0" prefWidth="277.0" style="visibility: hiddem;">
+        <columns>
+          <TableColumn fx:id="idInstruct" prefWidth="135.0" text="Номер поручения" />
+          <TableColumn fx:id="contentInst" prefWidth="141.0" text="Поручение" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

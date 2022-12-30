@@ -2,9 +2,12 @@ package com.example.oop_application.Controller;
 
 import com.example.oop_application.Model.Context;
 import com.example.oop_application.Model.Instruction;
+import com.example.oop_application.Model.Student;
 import com.example.oop_application.Model.Student_Instruction;
 import com.example.oop_application.Repository.Impl.InstructionRepositoryImpl;
+import com.example.oop_application.Repository.Impl.StudentRepositoryImpl;
 import com.example.oop_application.Repository.InstructionRepository;
+import com.example.oop_application.Repository.StudentRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,7 +30,17 @@ import java.util.List;
 
 public class InstructionController {
 
+
     InstructionRepository instructionRepository = new InstructionRepositoryImpl();
+
+    StudentRepository studentRepository = new StudentRepositoryImpl();
+
+    @FXML
+    public TableView<Student> tableStud;
+    @FXML
+    public TableColumn<Student,Integer> idStud;
+    @FXML
+    public TableColumn<Student,String> surnameStud;
 
     @FXML
     public TextField studentIdInput;
@@ -110,14 +123,17 @@ public class InstructionController {
             addPanel.setStyle("visibility: hidden;");
             idInput.setStyle("visibility: visible");
             studentIdInput.setStyle("visibility: visible");
+            tableStud.setStyle("visibility: hidden");
         });
 
         btnAdd.setOnAction(actionEvent -> {
             addPanel.setStyle("visibility: visible;");
-
+            updateStudentTable(studentRepository.getAllStudent());
+            tableStud.setStyle("visibility: visible");
             submit.setOnAction(action -> {
                 add();
                 updateTable(instructionRepository.getAllInstruction());
+                tableStud.setStyle("visibility: hidden");
             });
         });
 
@@ -207,6 +223,23 @@ public class InstructionController {
         stage.showAndWait();
     }
 
+
+    private void updateStudentTable(List<Student> list){
+        try {
+            ObservableList<Student> students = FXCollections.observableArrayList(list);
+
+            idStud.setCellValueFactory(new PropertyValueFactory<>("id"));
+            surnameStud.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+
+            tableStud.setItems(students);
+        }
+        catch (Exception e){
+            System.out.println("Error" + e);
+        }
+
+
+
+    }
 
     private void updateTable(List<Instruction> list){
 
