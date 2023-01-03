@@ -218,7 +218,7 @@ public class HeadController {
 
         try {
             if(headRepository.getHeadById(Integer.parseInt(idInput.getText())) != null){
-                modalWindow("Преподаватель с таким номером уже существует");
+                modalWindow("Руководитель с таким номером уже существует");
             }
             Head head = new Head();
             head.setId(Integer.valueOf(idInput.getText()));

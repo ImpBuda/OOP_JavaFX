@@ -25,7 +25,7 @@
             <TableColumn fx:id="patronymic" prefWidth="156.0" text="Отчество" />
         </columns>
       </TableView>
-      <Label layoutX="346.0" layoutY="14.0" prefHeight="58.0" prefWidth="299.0" text="Преподаватели">
+      <Label layoutX="346.0" layoutY="14.0" prefHeight="58.0" prefWidth="299.0" text="Руководители">
          <font>
             <Font size="40.0" />
          </font>
@@ -62,7 +62,7 @@
             <Button fx:id="submit" layoutX="15.0" layoutY="182.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Принять" />
             <Button fx:id="cancel" layoutX="15.0" layoutY="221.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Отмена" />
             <TextField fx:id="patronymicInput" layoutX="15.0" layoutY="117.0" promptText="Отчество" />
-            <TextField fx:id="idStudentInput" layoutX="14.0" layoutY="149.0" promptText="Номер студента" />
+            <TextField fx:id="idStudentInput" layoutX="14.0" layoutY="149.0" promptText="Номер работника" />
          </children>
       </AnchorPane>
       <TextField fx:id="findInput" layoutX="43.0" layoutY="18.0" prefHeight="25.0" prefWidth="268.0" promptText="Введите, что хотите найти" />
@@ -83,11 +83,11 @@
       </MenuBar>
       <Button fx:id="btnOpen" layoutX="939.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="открыть" />
       <Button fx:id="btnSave" layoutX="939.0" layoutY="452.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Сохранить как" />
-      <Button fx:id="studentmodel" layoutX="918.0" layoutY="30.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="142.0" text="Перейти к студентам" />
+      <Button fx:id="studentmodel" layoutX="918.0" layoutY="30.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="142.0" text="Перейти к работникам" />
       <Button fx:id="instructionmodel" layoutX="917.0" layoutY="73.0" mnemonicParsing="false" text="Перейти к поручениям" />
       <TableView fx:id="tableStud" layoutX="658.0" layoutY="142.0" prefHeight="256.0" prefWidth="198.0" style="visibility: hidden;">
         <columns>
-          <TableColumn fx:id="idStud" prefWidth="101.0" text="Номер студента" />
+          <TableColumn fx:id="idStud" prefWidth="101.0" text="Номер работника" />
           <TableColumn fx:id="surnameStud" prefWidth="95.0" text="Фамилия" />
         </columns>
       </TableView>

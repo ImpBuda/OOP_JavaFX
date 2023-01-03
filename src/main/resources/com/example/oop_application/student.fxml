@@ -19,12 +19,12 @@
    <children>
       <TableView fx:id="table" layoutX="14.0" layoutY="160.0" prefHeight="387.0" prefWidth="289.0">
         <columns>
-          <TableColumn fx:id="id" prefWidth="99.0" text="Номер студента" />
+          <TableColumn fx:id="id" prefWidth="99.0" text="Номер работника" />
           <TableColumn fx:id="firstName" prefWidth="90.0" text="Имя" />
           <TableColumn fx:id="lastName" prefWidth="98.0" text="Фамилия" />
         </columns>
       </TableView>
-      <Label layoutX="357.0" layoutY="14.0" prefHeight="58.0" prefWidth="178.0" text="Студенты">
+      <Label layoutX="357.0" layoutY="14.0" prefHeight="58.0" prefWidth="200.0" text="Работники">
          <font>
             <Font size="40.0" />
          </font>
@@ -50,15 +50,15 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Button fx:id="btnDelete" layoutX="14.0" layoutY="116.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Удалить студента" textFill="#689dff" />
-      <Button fx:id="btnUpdate" layoutX="228.0" layoutY="116.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Редактировать студента" textFill="#689dff" />
-      <Button fx:id="btnAdd" layoutX="446.0" layoutY="116.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Добавить студента" textFill="#689dff" />
+      <Button fx:id="btnDelete" layoutX="14.0" layoutY="116.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Удалить работника" textFill="#689dff" />
+      <Button fx:id="btnUpdate" layoutX="228.0" layoutY="116.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Редактировать работника" textFill="#689dff" />
+      <Button fx:id="btnAdd" layoutX="446.0" layoutY="116.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" style="-fx-cursor: hand;-fx-background-color: transparent; -fx-border-color: #689dff; -fx-border-radius: 10px; -fx-border-width: 2px;" text="Добавить работника" textFill="#689dff" />
       <AnchorPane fx:id="addPanel" layoutX="328.0" layoutY="204.0" prefHeight="300.0" prefWidth="178.0" style="-fx-background-color: white; visibility: hidden;">
          <children>
             <TextField fx:id="idInput" layoutX="13.0" layoutY="14.0" promptText="Номер" />
             <TextField fx:id="nameInput" layoutX="13.0" layoutY="49.0" promptText="Имя" />
             <TextField fx:id="surnameInput" layoutX="13.0" layoutY="84.0" promptText="Фамилия" />
-            <TextField fx:id="headIdInput" layoutX="13.0" layoutY="120.0" promptText="Номер преподавателя" />
+            <TextField fx:id="headIdInput" layoutX="13.0" layoutY="120.0" promptText="Номер руководителя" />
             <Button fx:id="submit" layoutX="15.0" layoutY="211.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Принять" />
             <Button fx:id="cancel" layoutX="15.0" layoutY="249.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Отмена" />
             <TextField fx:id="instructionIdInput" layoutX="13.0" layoutY="158.0" promptText="Номер поручения" />
@@ -81,7 +81,7 @@
       </MenuBar>
       <TableView fx:id="tableHead" layoutX="526.0" layoutY="160.0" prefHeight="187.0" prefWidth="277.0" style="visibility: hidden;">
         <columns>
-          <TableColumn fx:id="idHead" prefWidth="148.0" text="Номер преподавателя" />
+          <TableColumn fx:id="idHead" prefWidth="148.0" text="Номер руководителя" />
           <TableColumn fx:id="surnameHead" prefWidth="128.0" text="Фамилия" />
         </columns>
       </TableView>
